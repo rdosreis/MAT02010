@@ -1,0 +1,397 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Introdução à Inferência Causal: Apresentações"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+# O professor
+
+## Olá!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'rodrigo_cartoon.jpg'))
+
+```
+
+## Olá!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'hi_my_name_is.png'))
+
+```
+
+## Graduação
+
+- __Estatística - UFRGS__
+  + 2002 - 2007
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='15%', out.height='20%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'AC.png'))
+
+```
+
+- __Orientador:__ Prof. Alberto Cargnelutti
+- __"Métodos de agrupamento para o estudo da divergência genética em cultivares de feijão"__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='15%', out.height='20%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'feijao.jpg'))
+
+```
+
+## Mestrado
+
+- __Estatística - UFMG__
+  + 2008 - 2010
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='20%', paged.print=FALSE}
+
+library(cowplot)
+library(ggplot2)
+
+p1 <- ggdraw() + draw_image(here('images', 'EC.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here('images', 'MCPN.jpg'), scale = 0.82)
+
+plot_grid(p1, p2)
+
+```
+
+- __Orientadores:__ Prof. Enrico A. Colosimo e Prof.ª Maria do Carmo P. Nunes
+- __"Técnicas estatísticas para avaliação de novos marcadores de risco"__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='20%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here('images', 'barbeiro_errado.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here('images', 'barbeiro_certo.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+```
+
+- __PPG em Infectologia e Medicina Tropical__
+    + Cardiopatia em pacientes com doença de Chagas
+    
+## Doutorado
+
+- __Estatística - UFMG__
+  + 2010 - 2014
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='20%', paged.print=FALSE}
+
+library(cowplot)
+library(ggplot2)
+
+p1 <- ggdraw() + draw_image(here('images', 'EC.jpg'), scale = 0.95)
+p2 <- ggdraw() + draw_image(here('images', 'GG2.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+```
+
+- __Orientadores:__ Prof. Enrico A. Colosimo e Prof. Gustavo L. Gilardoni
+- __"Análise hierárquica de múltiplos sistemas reparáveis"__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='30%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'happy_sad.png'))
+
+```
+
+- __ELSA - Brasil__
+
+## Pós-Doutorado
+
+- __Saúde Pública - UFMG__
+  + 2015 - 2017
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='25%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'SB.png'))
+
+```
+
+- __Supervisora:__ Prof.ª Sandhi M. Barreto
+- __"Análise de mediação causal"__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='20%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'mediation.png'))
+
+```
+
+- __++ ELSA - Brasil__
+
+## Um caminho potencial
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'vio.jpg'))
+
+```
+
+## Atividades atuais
+
+- __Departamento de Estatística da UFRGS__
+- __Pós-Graduação em Epidemiologia da UFRGS__
+    + Gabriel Dalla Costa. Predição do tempo de permanência hospitalar através de métodos de aprendizagem de máquina (Orientação de mestrado em conjunto com a Prof.ª Patrícia Ziegelmann).
+    + Letícia Menegotto. Análise de mediação em modelos de curva de crescimento (Orientação de mestrado em conjunto com a Prof.ª Vanessa Leotti)
+    + Luísa Back. Efeito mediador da trajetória de índice de massa corporal na relação peso ao nascer e desenvolvimento de diabetes na vida adulta: o Estudo Longitudinal de Saúde do Adulto (Orientação de mestrado em conjunto com a Prof. Alvaro Vigo)
+- __+++++++++ ELSA - Brasil__
+
+## ELSA - Brasil
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='50%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here('images', 'elsa_errado.jpg'), scale = 0.6)
+p2 <- ggdraw() + draw_image(here('images', 'logo_elsa.png'), scale = 1)
+
+plot_grid(p1, p2)
+
+```
+
+\footnotesize
+
+- O __Estudo Longitudinal de Saúde do Adulto__ é uma investigação multicêntrica de coorte composta por 15 mil funcionários de seis instituições públicas de ensino superior e pesquisa das regiões Nordeste, Sul e Sudeste do Brasil.
+- A pesquisa tem o propósito de investigar a __incidência__ e os __fatores de risco__ para doenças crônicas, em particular, as cardiovasculares e o __diabetes__.
+- Em cada centro integrante do estudo, os sujeitos da pesquisa --- com idade entre 35 e 74 anos --- fazem exames e entrevistas nas quais são avaliados aspectos como condições de vida, diferenças sociais, relação com o trabalho, gênero e especificidades da dieta da população brasileira.
+
+## ELSA - Brasil
+
+__Centro de investigação Minas Gerais (Hospital Borges da Costa)__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'hospborges.jpg'))
+
+```
+
+## ELSA - Brasil
+
+__Centro de investigação Rio Grande do Sul (Centro de Pesquisas Clínicas)__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='70%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'cirs.png'))
+
+```
+
+## ELSA - Brasil
+### Uma propaganda: mural de bolsas da UFRGS
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'bolsa_elsa.png'))
+
+```
+
+# A disciplina
+
+## Objetivos
+
+- Apresentar os fundamentos da inferência causal em estudos aleatorizados e não-aleatorizados
+    + Definição dos efeitos causais
+    + Identificação dos efeitos causais
+    + Estimação e inferência de efeitos causais
+
+## Organização
+
+- __Disciplina:__ Tópicos Avançados em Estatística II: Introdução à Inferência Causal
+- __Turma:__ U
+- __Modalidade:__ Presencial com apoio online (Moodle)
+- __Professor:__ Rodrigo Citton Padilha dos Reis
+    + e-mail: rodrigocpdosreis@gmail.com ou citton.padilha@ufrgs.br
+    + Sala: B215 do Instituto de Matemática e Estatística
+
+- Sala A114 do IME - Campus do Vale - 43111
+- Horário: Quartas, das 8 hs 30 min às 10 hs 10 min
+
+## Aulas e material didático
+
+- __Aulas__ (teóricas e práticas)
+    + Exposição e __discussão__ dos conteúdos
+        - __Faremos leituras semanais de artigos e capítulos de livros__
+    + Exemplos
+- __Notas de aula__
+- __Canais de comunicação:__
+    + Durante as aulas
+    + Moodle: aulas, materiais, listas de exercícios
+    + Sala de aula virtual: notas das avaliações
+    + e-mail do professor
+
+## Aulas e material didático
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', paged.print=FALSE}
+knitr::include_graphics(here('images','Rlogo.png'))
+```
+
+- Exemplos com dados reais e dados artificiais __(simulação!)__ e exercícios com o apoio do computador:
+    + `R` e `RStudio`
+    + `DAGitty`
+    + ... ?!
+
+## Conteúdo programático
+
+1. Experimentos aleatórios
+    + Um ensaio aleatorizado
+    + Uma estrutura para inferência causal
+    + Inferência causal em experimentos aleatorizados
+2. Estudos observacionais
+    + Entre estudos observacionais e experiências
+    + O papel do escore de propensão na estimação de efeitos causais
+    + Diagramas causais (grafos acíclicos dirigidos - DAGs)
+    + Sensibilidade
+    + Técnicas de estimação
+        - estratificação
+        - ajuste/regressão
+        - pareamento
+        - escore de propensão: estratificação, ajuste, pareamento, estimação ponderada pelo inverso da probabilidade de tratamento
+3. Tópicos avançados
+    + Análise de mediação
+    + Análise de interação
+    + O aprendizado de máquina na inferência causal
+
+## Avaliação
+
+- Serão realizadas trabalhos teóricos e práticos em sala de aula ($MT$ é a média dos trabalhos) e um seminário ($S$; escrito + apresentação) como atividades de avaliação
+    + O seminário e os trabalhos práticos podem ser feitos em duplas
+- Cada atividade de avaliação vale 10 pontos
+- Será realizado um trabalho escrito como atividade de recuperação ($TR$)
+    + Para os alunos que não atingirem o conceito mínimo __e__ com frequência mínima de 75%
+
+## Avaliação
+
+$$
+NF = 0,5 \times S + 0,5 \times MT
+$$
+
++ __A:__ $9 \leq NF \leq 10$
++ __B:__ $7,5 \leq NF < 9$
++ __C:__ $6 \leq NF < 7,5$
+
++ Se $NF < 6$ e frequência $\geq$ 75%, o aluno poderá realizar o trabalho de recuperação e neste caso
+
+$$
+NF' = NF \times 0, 4 + PR \times 0, 6
+$$
+
+- __C:__ $NF' \geq 6$
+- __D:__ $NF' < 6$
+
+## Referências bibliográficas
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+knitr::include_graphics(here('images','books.png'))
+```
+
+- Ainda: https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/
+
+# Inferência causal
+
+## A primeira pergunta é fácil ...
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'abu_na_causa.png'))
+
+```
+
+## Uma pergunta mais fácil!
+
+### O que é inferência causal?
+
+O termo "inferência causal" passou a denotar certas maneiras especiais de abordar os aspectos causais da análise estatística.\footnote{Aalen, O. O., R{\o}ysland, K., Gran, J. M. Causality, mediation and time: a dynamic viewpoint. \emph{Journal of the Royal Statistical Society, Series A}, 175:831-861, 2012.}
+
+## Um comentário
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', out.height='30%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'silentmonkey.png'))
+
+```
+
+No entanto, a teoria estatística tem sido relativamente __silenciosa__ em questões de causalidade. Muitos livros didáticos, especialmente os mais antigos, evitam qualquer menção ao termo, __exceto__ em configurações de experimentos aleatórios. Alguns mencionam principalmente para enfatizar que a __correlação__ ou __associação não é o mesmo que causação__, e alguns até advertem seus leitores para evitar o uso de linguagem causal na estatística. No entanto, para muitos usuários de métodos estatísticos, as declarações causais são exatamente o que elas buscam.\footnote{Imbens, G. W., Rubin, D. B. \emph{Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction}. Cambridge University Press, 2015}
+
+## Uma terceira pergunta!
+
+### Por que estudar inferência causal?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='65%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'uber_na_causa.png'))
+
+```
+
+## Por que estudar inferência causal?
+
+### Questões causais
+
+- As escolas _charter_ aumentam os escores dos testes dos alunos do ensino fundamental?
+    + Se sim, quão grandes são os ganhos em comparação com aqueles que poderiam ser realizados pela implementação de reformas educacionais alternativas?
+- A obtenção de um diploma universitário aumenta o salário de um indivíduo no mercado de trabalho?
+    + Em caso afirmativo, esse efeito específico é grande em relação aos ganhos salariais que poderiam ser obtidos apenas através de treinamento no trabalho?
+- O uso de uma cédula de borboleta em alguns condados da Flórida na eleição presidencial de 2000 custou votos de Al Gore?
+    + Em caso afirmativo, o número de votos errados seria suficientemente grande para alterar o resultado eleitoral?
+
+## Por que estudar inferência causal?
+
+- Em essência, esses tipos de perguntas são simples questões de causa e efeito da forma $X$ causa $Y$?
+    + Se $X$ causa $Y$, quão grande é o efeito de $X$ em $Y$?
+    + O tamanho desse efeito é grande em relação aos efeitos de outras causas de $Y$?
+- Uma implicação prática: __ação__ (ou manipulação, tratamento, ou intervenção).
+    + Saber "a causa" nos permite tomar uma ação a fim de prevenir (no caso de um efeito nocivo) ou de estimular (no caso de um efeito benéfico).
+
+## Por que estudar inferência causal?
+
+- Simples questões de __causa__ e __efeito__ são a motivação para muitas pesquisas nas __ciências sociais__, __demográficas__ e da __saúde__, embora respostas definitivas para questões de causa e efeito nem sempre sejam possíveis de serem formuladas, dadas as restrições que os pesquisadores enfrentam na coleta de dados e avaliar explicações alternativas.
+- Mesmo assim, há motivos para __otimismo__ em relação às nossas habilidades atuais e futuras para tratar efetivamente de questões de causa e efeito.
+- Nas últimas quatro décadas, um __modelo de causalidade__ contrafactual __foi desenvolvido__ e __aperfeiçoado__ e, como resultado, uma estrutura unificada para o julgamento de questões causais está agora disponível.
+
+## Modelos estatísticos
+
+\structure{Breiman, 2001}\footnote{Breiman, L. Statistical modeling: the two cultures. \emph{Statistical Science}, 16:199-231, 2001.} sugere que existem dois objetivos na análise de dados:
+\begin{itemize}
+\item \structure{Predição}: ser capaz de prever o que as respostas vão ser para futuras variáveis de entrada.
+\item \structure{Informação}: extrair algumas informações sobre como a natureza está associando as variáveis de resposta às variáveis de entrada. 
+\end{itemize}
+
+## Modelos estatísticos
+
+\structure{\emph{To Explain or to Predict?}}\footnote{Shmueli, G. To explain or to predict. \emph{Statistical Science}, 25:289-310, 2010.}
+
+\begin{itemize}\setlength{\itemsep}{+3mm}
+\item \structure{Modelagem explicativa:} aplicação de modelos estatísticos aos dados para testar hipóteses causais.
+\item \structure{Modelagem preditiva:} aplicação de modelos estatísticos \structure{(mineração de dados, aprendizado estatístico/máquina)} para predição/classificação de novas ou futuras observações.
+\item \structure{Modelagem descritiva:} aplicação de modelos estatísticos para representar de maneira compacta a estrutura dos dados; captura a associação entre as variáveis dependente e independentes \structure{(ausência de hipóteses causais)}.
+\end{itemize}
+\structure{\bf As abordagens explicativa e preditiva são diferentes}
+\begin{itemize}\setlength{\itemsep}{+3mm}
+\item No entanto, não são necessariamente inconsistentes ou incompatíveis.
+\end{itemize}
+
+## Próximas aulas
+
+- Costuma-se dizer: "Não se pode provar causalidade com estatística".
+- Vamos conhecer argumentos contrários, e assim, passar a afirmarmos que "Só é possível provar causalidade com estatística"!
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'caffeine-causality-loop.jpg'))
+
+```
+
