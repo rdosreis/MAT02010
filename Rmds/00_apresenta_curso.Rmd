@@ -245,12 +245,12 @@ knitr::include_graphics(here('images','Rlogo.png'))
 
 ## Conteúdo programático
 
-1. Experimentos aleatórios
+1. Experimentos aleatorizados
     + Um ensaio aleatorizado
     + Uma estrutura para inferência causal
     + Inferência causal em experimentos aleatorizados
 2. Estudos observacionais
-    + Entre estudos observacionais e experiências
+    + Entre estudos observacionais e experimentos
     + O papel do escore de propensão na estimação de efeitos causais
     + Diagramas causais (grafos acíclicos dirigidos - DAGs)
     + Sensibilidade
@@ -259,7 +259,7 @@ knitr::include_graphics(here('images','Rlogo.png'))
         - ajuste/regressão
         - pareamento
         - escore de propensão: estratificação, ajuste, pareamento, estimação ponderada pelo inverso da probabilidade de tratamento
-3. Tópicos avançados
+3. Tópicos complementares
     + Análise de mediação
     + Análise de interação
     + O aprendizado de máquina na inferência causal
@@ -285,7 +285,7 @@ $$
 + Se $NF < 6$ e frequência $\geq$ 75%, o aluno poderá realizar o trabalho de recuperação e neste caso
 
 $$
-NF' = NF \times 0, 4 + PR \times 0, 6
+NF' = NF \times 0, 4 + TR \times 0, 6
 $$
 
 - __C:__ $NF' \geq 6$
