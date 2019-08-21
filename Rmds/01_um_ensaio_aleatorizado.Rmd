@@ -1,0 +1,261 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Experimentos aleatorizados: um ensaio aleatorizado"
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+---
+
+# Tratamento de Emergência do Choque Séptico
+
+## Choque séptico
+
+- O choque séptico ocorre quando uma infecção generalizada leva a uma pressão arterial muito baixa.
+    + Muitas vezes é letal, particularmente em crianças pequenas e idosos.
+        <!-- 1. No início, a infecção produz calafrios, fraqueza, batimento cardíaco acelerado e respiração acelerada.  -->
+        <!-- 2. Em seguida, danifica os pequenos vasos sanguíneos, então eles vazam fluido para os tecidos próximos. -->
+        <!-- 3. O coração aumenta a dificuldade de bombear, a pressão arterial cai e menos sangue atinge órgãos vitais.  -->
+    + A cada ano nos Estados Unidos, há mais de 750 mil casos de choque séptico.
+    + No Brasil são aproximadamente 150 mil casos por ano (fonte: Google).
+- O tratamento inicial para choque séptico geralmente ocorre em uma sala de emergência do hospital e 20% dos pacientes podem morrer.
+
+## O ensaio ProCESS
+
+- Qual é a melhor maneira de tratar o choque séptico? 
+- Ensaio clínico aleatorizado: __protocolo agressivo__ _vs._ __protocolo menos agressivo__ (terapia padrão).
+    <!-- + Estes serão chamados de tratamento agressivo e tratamento menos agressivo. -->
+- O ensaio foi conduzido pelos __Investigadores do Protocolo de Cuidados para Choque Séptico Precoce__ (_Protocolized Care for Early Septic Shock_ - __ProCESS__), uma colaboração entre pesquisadores que trabalham em 31 departamentos de emergência nos Estados Unidos.
+
+## O ensaio ProCESS
+
+- Em um estudo aleatorizado, uma moeda honesta é lançada para decidir o tratamento de cada paciente.
+- Para o ensaio ProCESS, os lançamentos de moeda destinaram:
+    + 439 pacientes $\Rightarrow$ protocolo agressivo; 
+    + 446 $\Rightarrow$ protocolo menos agressivo.
+- Dois pacientes (com características diferentes) neste ensaio clínico têm igual probabilidade de ser designado ao tratamento agressivo ou ao tratamento menos agressivo.
+
+# Questões Causais
+
+## O que são questões causais?
+
+__Qual é a melhor maneira de tratar o choque séptico?__
+
+- Esta é uma questão causal, uma questão sobre os __efeitos causados pelos tratamentos__.
+- A questão começa com dois possíveis tratamentos para o choque séptico.\footnote{Consideramos apenas dois níveis de tratamento por uma questão de simplicidade. Esta ideia pode ser generalizada para múltiplos níveis de tratamento e para outros regimes de tratamento mais gerais.}
+- Para um paciente específico é perguntado: 
+    + O que aconteceria com esse paciente sob o primeiro tratamento?
+    + O que aconteceria com o paciente sob o segundo tratamento?
+    + O paciente se sairia melhor sob o primeiro, em vez do segundo tratamento?
+    + O desfecho seria o mesmo sob os dois tratamentos?
+
+__Efeitos causais são comparações de desfechos (resultados, ou respostas) potenciais sob tratamentos alternativos.__
+
+## Desfechos potenciais no senso comum
+
+\begin{block}{The Family Man (2000)}
+\begin{columns}[c]
+\column{1.3in}
+\includegraphics[width=0.9\columnwidth]{TheFamilyMan}
+\column{3.3in}
+{\scriptsize Jack Campbell é um investidor de Wall Street jovem e solteiro vivendo uma vida de rico em Nova Iorque. Ele se surpreende quando sua ex-namorada, Kate, tentou ligar para ele após anos sem se verem. Após uma conversa com o seu mentor na empresa, Jack resolve pensar se responderia a esta chamada no dia seguinte. Naquela noite de Natal, porém, ele resolve ir a pé até sua casa, passando por uma loja de conveniências no caminho e convencendo para que um vencedor da loteria, irritado, chamado Cash, não atirasse no vendedor. Ele oferece ajuda à Cash antes de ir dormir em sua cobertura.}
+\end{columns}
+{\scriptsize Tudo muda num passe de mágica quando na manhã seguinte ele acorda em um quarto no subúrbio de Nova Jersey com Kate, a sua atual esposa, com quem anteriormente ele havia deixado de se casar e ainda com duas crianças que ele sequer conhecia, Jack percebe então que esta é justamente \structure{a vida que ele teria} se não tivesse se transformado em um investidor financeiro quando jovem. Ao invés disso, ele tem uma vida modesta, onde ele é um vendedor de pneus e Kate é uma advogada não-remunerada.}
+\end{block}
+
+## Desfechos potenciais no senso comum
+
+\begin{block}{Rodrigo do violão}
+\begin{columns}[c]
+\column{2.3in}
+\includegraphics[width=0.9\columnwidth]{vio}
+\column{2.3in}
+\includegraphics[width=0.9\columnwidth]{caminho_potencial}
+\end{columns}
+\end{block}
+
+## Desfechos potenciais: breve histórico
+
+\begin{columns}[c]
+\column{1.8in}
+\includegraphics[width=0.5\columnwidth]{Neyman}
+\includegraphics[width=0.5\columnwidth]{Rubin}
+\column{2.8in}
+Na estatística, a ideia de definir efeitos causais como comparações de desfechos potenciais sob tratamentos alternativos é creditada a \textbf{Jerzy Neyman} e \textbf{Donald Rubin}. 
+\end{columns}
+
+\begin{itemize}
+\item Neyman introduziu a ideia no contexto de experimentos aleatorizados nos anos 1920\footnote{Splawa-Neyman, J., Dabrowska, D.M., Speed, T.P. On the Application of Probability Theory to Agricultural Experiments. Essay on Principles. Section 9. \emph{Statistical Science} 5:465-472, 1990.}.
+\item Rubin desenvolveu a ideia em outras áreas de inferência causal\footnote{Rubin, D.B. Estimating causal effects of treatments in randomized and nonrandomized
+studies. \emph{Journal of Educational Psychology} 66:688–701, 1974.}.
+\end{itemize}
+
+## Por que a inferência causal é difícil?
+
+- A inferência causal é difícil porque cada paciente recebe um tratamento, não ambos os tratamentos.
+- Nós nunca vemos o efeito causal porque o efeito causal é a comparação de dois desfechos potenciais que o paciente teria exibido sob os dois tratamentos alternativos\footnote{\textbf{Problema fundamental da inferência causal} (ver Holland, P. Statistics and Causal Inference. \emph{JASA}, 81:945-960, 1986)}.
+- A inferência causal é difícil porque é sobre algo que nunca podemos ver.
+
+## Por que a atribuição aleatória de tratamentos útil na inferência causal?
+
+__Podemos ver outra coisa?__
+
+- No estudo ProCESS, havia uma __população finita__ composta de $885 = 439 + 446$ pacientes que receberam tratamento agressivo ou menos agressivo, por obra do acaso (o lançamento da moeda).
+- Cada paciente nesta população tem um desfecho potencial sob tratamento agressivo e um desfecho potencial sob tratamento menos agressivo, mas nós vemos um ou outro, nunca ambos.
+- Os 439 pacientes que receberam o tratamento agressivo são uma amostra aleatória da população de 885 pacientes.
+- Os 446 pacientes que receberam o tratamento menos agressivo também são uma amostra aleatória de 885 pacientes.
+
+## Por que a atribuição aleatória de tratamentos útil na inferência causal?
+
+- Se vemos desfechos para uma metade aleatória de uma população, e se a população não é muito pequena, então podemos dizer um pouco sobre os desfechos para toda a população.
+    + Isto se deve em parte porque vimos metade da população, mas o mais importante é que vimos uma __metade aleatória__ (a metade que não vimos não podia ser tão diferente da metade que vimos).
+
+## Por que a atribuição aleatória de tratamentos útil na inferência causal?
+
+- De nossas duas metades aleatórias da população, metades que receberam tratamentos diferentes, poderemos dizer um pouco sobre como todos os 885 pacientes teriam se saído se todos tivessem recebido tratamento agressivo ou se todos tivessem recebido tratamento menos agressivo. 
+    + Ou seja, poderemos dizer um pouco sobre o efeito do tratamento nas 885 pessoas como grupo __(população)__, embora estejamos limitados no que podemos dizer sobre qualquer uma delas __(indivíduo)__.
+
+## Questões causais distinguem covariáveis e desfechos
+
+- Uma __covariável__ é uma quantidade determinada __antes__ da designação do tratamento.
+    + __Idade__, __gênero__, __origem__ e __APACHE__\footnote{\emph{Acute Physiology and Chronic Health Evaluation}} __II__ (escore de gravidade) do paciente no momento da admissão.
+- APACHE II na admissão (anterior ao tratamento) é covariável; APACHE II uma semana após a admissão (posterior ao tratamento) é um desfecho.
+- Ao distinguir covariáveis e desfechos, o __tempo__ é importante.
+    + O papel que o tempo desempenha na distinção de covariáveis e desfechos é fundamental para o papel que o tempo desempenha em causa e efeito.
+- __Observação:__ como uma covariável é determinada antes da designação do tratamento, a covariável não muda quando o paciente é designado para um tratamento ou outro.
+    + Atribuir um tratamento agora pode alterar o futuro, mas não pode alterar o passado; não pode alterar uma covariável.
+
+## Questões causais distinguem covariáveis e desfechos
+
+- Um __desfecho__ é uma quantidade determinada __após__ a atribuição do tratamento, portanto, uma quantidade que pode ter sido afetada pelo recebimento de um tratamento em vez do outro.
+- Um desfecho existe em duas versões: __(1)__ o valor se o paciente recebe o protocolo agressivo e __(2)__ o valor se o paciente recebe o protocolo menos agressivo.
+- O __desfecho primário__ no __estudo ProCESS__ foi a __mortalidade intra-hospitalar em 60 dias__ após a designação do tratamento.
+    + Sucesso: receber alta do hospital antes dos 60 dias ou estar vivo no hospital aos 60 dias
+    + Falha: morrer no hospital antes dos 60 dias.
+
+## Questões causais distinguem covariáveis e desfechos
+
+- __Tratamento agressivo é benéfico:__
+    + Paciente que teria recebido alta hospitalar (vivo) antes de 60 dias caso tivesse recebido o tratamento agressivo, mas que teria morrido no hospital antes de 60 dias caso tivesse recebido o tratamento menos agressivo.
+- __Tratamento agressivo não é benéfico para ninguém:__
+    + A alteração do tratamento atribuído a qualquer um desses pacientes não mudaria se esse paciente vivesse ou morresse. 
+- Os efeitos causais são comparações dos desfechos potenciais que os pacientes exibiriam sob tratamentos alternativos.
+
+## Questões causais distinguem covariáveis e desfechos
+
+### Covariáveis que não foram medidas; Desfechos potenciais que não foram vistos
+
+- Uma covariável __não medida__ (não mensurada) é uma quantidade do indivíduo anterior ao tratamento que não foi medida.
+    + Esta não é conhecida do pesquisador.
+- Um desfecho potencial que não foi visto é também conhecido como __contrafactual__.
+    + Este também não é conhecido do pesquisador.
+
+# Aleatorização Equilibra Covariáveis
+
+## Aleatorização ausente, grupos tratado e controle podem diferir antes do tratamento
+
+- O estudo ProCESS designou aleatoriamente pacientes para um protocolo agressivo ou um protocolo menos agressivo;
+    + Moedas honestas foram lançadas para designar os tratamentos.
+- A atribuição aleatória não ocorre naturalmente.
+    + Se a designação ao tratamento fosse uma atribuição do pesquisador, e supondo que o tratamento agressivo fosse benéfico ao paciente, provavelmente os pacientes mais graves receberiam o tratamento mais agressivo, enquanto que os pacientes menos graves receberiam o tratamento menos agressivo.
+    + Por outro lado, pacientes mais graves são mais suscetíveis à morte antes de 60 dias.
+
+## Aleatorização ausente, grupos tratado e controle podem diferir antes do tratamento
+
+- Se quisermos saber se o tratamento agressivo salva mais vidas do que o tratamento menos agressivo, então precisamos de uma comparação equitativa.
+- Comparações equitativas são raras por natureza.
+
+- A aleatorização parece equitativa $\Rightarrow$ __simetria__ (pré-tratamento entre os grupos).
+
+## Aleatorização equilibra covariáveis observadas
+
+- No estudo ProCESS, a atribuição aleatória de tratamentos significava que cada paciente tinha a __mesma probabilidade__ de receber tratamento agressivo ou tratamento menos agressivo.
+    + __Exemplo:__ paciente do sexo feminino, 72 anos, com escore APACHE II de 30, teve igual probabilidade de receber tratamento agressivo ou tratamento menos agressivo;
+        - Portanto, além do acaso (além de uma sequência infeliz de lançamentos de moedas na atribuição de tratamentos), pacientes do sexo feminino de 72 anos com escores APACHE II de 30 __devem ocorrer com frequências iguais em ambos os grupos__ de tratamento. 
+
+\begin{alertblock}{}
+\begin{itemize}
+\item A chance de receber tratamento agressivo não muda com os atributos que descrevem os pacientes antes do tratamento.
+\begin{itemize}
+\item A chave é que as moedas honestas ignoram os atributos dos pacientes ao atribuir tratamentos a eles.
+\end{itemize}
+\end{itemize}
+\end{alertblock}
+
+## Aleatorização equilibra covariáveis observadas
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'process_covariate_balance.png'))
+
+```
+
+## Aleatorização equilibra covariáveis observadas
+
+- Em termos dessas nove covariáveis, os dois grupos parecem bastante __comparáveis__ (covariáveis parecem equilibradas).
+- Dado que os dois grupos pareciam semelhantes antes do tratamento, parece razoável comparar os desfechos do tratamento agressivo e menos agressivo.
+
+- __Observação:__ as nove covariáveis não foram usadas na criação dos dois grupos de tratamento. O equilíbrio na Tabela 1.1 é apenas sorte (!).
+    + Se repetíssemos o processo de aleatorização dos tratamentos, veríamos uma propriedade desejada: equilíbrio na distribuição das covariáveis
+
+## Aleatorização equilibra covariáveis não-observadas
+
+- __Pergunta:__ poderíamos forçar o balanceamento das covariáveis sem o uso da aleatorização?
+- Poderíamos, mas esta não é uma boa ideia.
+- A aleatorização garante o balanceamento das covariáveis medidas e não medidas, algo que não é possível quando obtemos o balanceamento das covariáveis (medidas) com base nas próprias covariáveis (medidas).
+
+# O Tratamento Agressivo é Melhor?
+
+## O Tratamento Agressivo é Melhor?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'process_mortality_outcomes.png'))
+
+```
+
+- O protocolo agressivo não parece melhor e talvez um pouco pior do que o protocolo menos agressivo.
+
+## O Tratamento Agressivo é Melhor?
+
+- Cuidado é necessário na interpretação dessas duas taxas de mortalidade, porque elas se referem a pessoas diferentes.
+- Os grupos receberam tratamentos diferentes, mas também contêm pessoas diferentes.
+
+## O Tratamento Agressivo é Melhor?
+
+- Vimos que esses grupos de pacientes são semelhantes como grupos, mas não são idênticos;
+    + Eles podem diferir de formas em covariáveis não medidas.
+- Talvez a diferença entre as duas taxas de mortalidade se deva ao acaso
+    + Lançamento de uma moeda que atribuiu a um paciente um tratamento agressivo e ao próximo paciente a um tratamento menos agressivo.
+- A diferença entre 21,0% e 18,2% é muito grande para ser devido ao acaso, isto é, muito grande para ser devido a uma sequência de sorteios de lançamentos de moedas na atribuição de tratamentos?
+- Se o tratamento agressivo não conferisse nenhum benefício, mas não causasse nenhum dano em comparação com o tratamento menos agressivo, os lançamentos de moeda que atribuíam tratamentos aos pacientes produziriam taxas de mortalidade tão diferentes quanto 21,0% e 18,2%?
+- Ou podemos ter certeza de que o tratamento menos agressivo salva vidas em comparação com o tratamento agressivo? 
+
+## O Tratamento Agressivo é Melhor?
+
+- Dizemos que não há diferença nos efeitos de dois tratamentos, se cada paciente se comportasse da mesma maneira no primeiro e no segundo tratamentos.
+    + No estudo ProCESS, “sem diferença de efeito” significa que todo paciente que morreria no hospital por 60 dias com tratamento agressivo também morreria no hospital por 60 dias com tratamento menos agressivo; por outro lado, todo paciente que morreria no hospital por 60 dias com tratamento menos agressivo também morreria no hospital por 60 dias com tratamento agressivo.
+- Se isso fosse verdade, então os dois desfechos potenciais seriam iguais para cada paciente.
+    + "Dois caminhos sempre terminariam no mesmo lugar".
+    + Esta é a __hipótese nula__ de não haver diferença nos efeitos dos dois tratamentos sendo comparados, ou, mais precisamente, a __hipótese nula de Fisher__ de nenhuma diferença nos efeitos dos dois tratamentos.
+
+<!-- ## A tabela 2 × 2 e a hipótese de Fisher -->
+
+## Avisos
+
+- __Para casa:__ Ler o Capítulo 2 do livro do Paul R. Rosenbaum.
+- __Próxima aula:__ Discussão do Capítulo 2 do livro do Paul R. Rosenbaum.
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'traffic-jam-causality-loop.jpg'))
+
+```
+
