@@ -1,0 +1,84 @@
+---
+title: "Aleatorização e equilíbrio das covariáveis"
+author: "Rodrigo Citton P. dos Reis"
+date: "21/08/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dados, motivação e o problema
+
+Os dados considerados neste estudo de caso são derivados de um estudo de coorte – Evans County Heart Disease Study – realizado entre 1960 e 1969.
+
+Estes dados dizem respeito a uma coorte de 609 indivíduos do sexo
+masculino, brancos, com idades entre 40 e 76 anos, livres de doença
+coronariana e residentes no distrito de Evans, Georgia, em 1960.
+
+As __covariáveis__ são descritas a seguir:
+
+| Nome da variável | Descrição da variável           | Código da variável |
+| :--------------- | :------------------------------ | :----------------- |
+| cat              | Nível sérico de catecolaminas   | 0 = Baixo          |
+|                  |                                 | 1 = Alto           |
+| age              | Idade Anos                      |                    |
+| chl              | Colesterol                      | mg/100 mL          |
+| smk              | Tabagismo                       | 0 = Nunca fumou    |
+|                  |                                 | 1 = Fumante        |
+| ecg              | Alterações do eletrocardiograma | 0 = Normal         |
+|                  |                                 | 1 = Alterado       |
+| dbp              | Pressão arterial diastólica     | mmHg               |
+| sbp              | Pressão arterial sistólica      | mmHg               |
+
+
+Suponha que todos os indivíduos do estudo possuem __doença arteria coronariana__ e um __tratamento__ com base em um programa de atividade física (mais uso de anticoagulante) será avaliado em um estudo aleatorizado contra um tratamento padrão (apenas o uso de anticoagulante). O __desfecho__ a ser avaliado é o tempo de vida dos indivíduos.
+
+Realize a aleatorização dos indivíduos em dois grupos e avalie o equilíbrio das covariáveis com base em estatísticas descritivas.
+
+O conjunto de dados encontra-se no arquivo `evans_ex.rds`.
+
+## Aleatorização e o equilíbrio das covariáveis
+
+- Carregando o arquivo de dados
+
+```{r , message=FALSE, warning=FALSE}
+
+library(here)
+
+arquivo <- here("data", "evans_ex.rds")
+arquivo
+
+evans <- readRDS(file = arquivo)
+summary(evans)
+
+```
+
+- Aleatorizando o tratamento (lançando moedas honestas no `R`):
+
+```{r , message=FALSE, warning=FALSE}
+
+set.seed(1158) # mude a semente para obter um outro resultado para a aleatorização
+evans$trt <- factor(rbinom(n = length(evans$cat),
+                           size = 1,
+                           prob = 0.5))
+summary(evans)
+
+```
+
+- Avaliando o equilíbrio da distribuição das covariáveis
+
+```{r , message=FALSE, warning=FALSE}
+
+library(compareGroups)
+
+res <- compareGroups(trt ~ ., data = evans, method = 1)
+tab <- createTable(res, show.p.overall = FALSE)
+export2md(tab,
+          caption = "Equilíbrio das covariáveis")
+
+```
+
+- Compartilhe o seu resultado também!
+
