@@ -37,7 +37,7 @@ date: |
 - Em um estudo aleatorizado, uma moeda honesta é lançada para decidir o tratamento de cada paciente.
 - Para o ensaio ProCESS, os lançamentos de moeda destinaram:
     + 439 pacientes $\Rightarrow$ protocolo agressivo; 
-    + 446 $\Rightarrow$ protocolo menos agressivo.
+    + 446 pacientes $\Rightarrow$ protocolo menos agressivo.
 - Dois pacientes (com características diferentes) neste ensaio clínico têm igual probabilidade de ser designado ao tratamento agressivo ou ao tratamento menos agressivo.
 
 # Questões Causais
@@ -175,14 +175,15 @@ __Podemos ver outra coisa?__
 ## Aleatorização equilibra covariáveis observadas
 
 - No estudo ProCESS, a atribuição aleatória de tratamentos significava que cada paciente tinha a __mesma probabilidade__ de receber tratamento agressivo ou tratamento menos agressivo.
-    + __Exemplo:__ paciente do sexo feminino, 72 anos, com escore APACHE II de 30, teve igual probabilidade de receber tratamento agressivo ou tratamento menos agressivo;
+    + __Exemplo:__ paciente do sexo feminino, 72 anos, com escore APACHE II de 30, teve igual probabilidade de receber tratamento agressivo ou tratamento menos agressivo.
         - Portanto, além do acaso (além de uma sequência infeliz de lançamentos de moedas na atribuição de tratamentos), pacientes do sexo feminino de 72 anos com escores APACHE II de 30 __devem ocorrer com frequências iguais em ambos os grupos__ de tratamento. 
 
-\begin{alertblock}{}
+\begin{alertblock}{Ignorabilidade}
 \begin{itemize}
 \item A chance de receber tratamento agressivo não muda com os atributos que descrevem os pacientes antes do tratamento.
 \begin{itemize}
-\item A chave é que as moedas honestas ignoram os atributos dos pacientes ao atribuir tratamentos a eles.
+\item A chave é que as moedas honestas \textbf{ignoram} os atributos dos pacientes ao atribuir tratamentos a eles.
+\item Ou seja, a probabilidade de designação ao tratamento agressivo é \textbf{independente} das covariáveis (medidas e não medidas).
 \end{itemize}
 \end{itemize}
 \end{alertblock}
@@ -228,7 +229,7 @@ knitr::include_graphics(here('images', 'process_mortality_outcomes.png'))
 
 ## O Tratamento Agressivo é Melhor?
 
-- Vimos que esses grupos de pacientes são semelhantes como grupos, mas não são idênticos;
+- Vimos que esses grupos de pacientes são semelhantes como grupos, mas não são idênticos.
     + Eles podem diferir de formas em covariáveis não medidas.
 - Talvez a diferença entre as duas taxas de mortalidade se deva ao acaso
     + Lançamento de uma moeda que atribuiu a um paciente um tratamento agressivo e ao próximo paciente a um tratamento menos agressivo.
@@ -239,8 +240,8 @@ knitr::include_graphics(here('images', 'process_mortality_outcomes.png'))
 ## O Tratamento Agressivo é Melhor?
 
 - Dizemos que não há diferença nos efeitos de dois tratamentos, se cada paciente se comportasse da mesma maneira no primeiro e no segundo tratamentos.
-    + No estudo ProCESS, “sem diferença de efeito” significa que todo paciente que morreria no hospital por 60 dias com tratamento agressivo também morreria no hospital por 60 dias com tratamento menos agressivo; por outro lado, todo paciente que morreria no hospital por 60 dias com tratamento menos agressivo também morreria no hospital por 60 dias com tratamento agressivo.
-- Se isso fosse verdade, então os dois desfechos potenciais seriam iguais para cada paciente.
+    + No estudo ProCESS, __"sem diferença de efeito"__ significa que todo paciente que morreria no hospital por 60 dias com tratamento agressivo também morreria no hospital por 60 dias com tratamento menos agressivo; por outro lado, todo paciente que morreria no hospital por 60 dias com tratamento menos agressivo também morreria no hospital por 60 dias com tratamento agressivo.
+- Se isso fosse verdade, então __os dois desfechos potenciais seriam iguais__ para __cada paciente__.
     + "Dois caminhos sempre terminariam no mesmo lugar".
     + Esta é a __hipótese nula__ de não haver diferença nos efeitos dos dois tratamentos sendo comparados, ou, mais precisamente, a __hipótese nula de Fisher__ de nenhuma diferença nos efeitos dos dois tratamentos.
 
