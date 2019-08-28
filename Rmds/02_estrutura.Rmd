@@ -1,0 +1,131 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Estrutura"
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+---
+
+# Uma População
+
+## Uma população
+
+- Os $885 = 439 + 446$ pacientes no Estudo ProCESS são uma __população pequena__ e __finita__, não muito diferente da população de pessoas que vivem em uma cidade pequena.
+- Poderíamos nos referir aos pacientes pelo nome, mas é mais conveniente numerá-los: $i = 1, 2, \ldots , I = 885$.
+    + Aqui, $i$ faz referência a um indivíduo, e $I$ se refere ao número total de indivíduos, $I = 885$.
+- Nos exemplos deste capítulo, o indivíduo $i = 17$ é o nosso amigo Harry!
+- Ao substituir 885 pacientes por $I$ pacientes, podemos ser fiéis ao descrever o estudo ProCESS, reconhecendo ao mesmo tempo que muitos detalhes do estudo ProCESS são incidentais - por exemplo, o tamanho da amostra - e que o que estamos dizendo é tão verdadeiro quanto qualquer experimento formado pelo lançamento de moedas honestas.
+
+# Covariáveis
+
+## Covariáveis
+
+- $x_i$ representará as covariáveis observadas para o paciente $i$.
+- Na Tabela 1.1, existem nove covariáveis para cada paciente $i$, e $x_i$ registra os valores dessas nove covariáveis para o paciente i.
+- Várias covariáveis são atributos que podem estar __presentes__ ou __ausentes__ em vez de números, mas é costume registrar um atributo como 1 se estiver presente e 0 se estiver ausente.
+    + A média de um atributo é a proporção de vezes que o atributo está presente (e 100 vezes essa média é a porcentagem), como na Tabela 1.1.
+
+## Covariáveis
+
+### Relembrando: Tabela 1.1
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'process_covariate_balance.png'))
+
+```
+    
+## Covariáveis
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'process_covariate_patient17.png'))
+
+```
+
+- Cada paciente $i$ dos pacientes $I = 885$ tem tal tabela $x_i$ de nove números descrevendo o paciente $i$.
+
+## Covariáveis não medidas
+
+- $u_i$ representará as __covariáveis não observadas__ para o paciente $i$.
+- A estrutura de $u_i$ é semelhante à estrutura de $x_i$, mas $u_i$ é uma covariável que não medimos.
+- O que há em $u_i$? Talvez ...
+    + ... $u_i$ inclua um indicador, $1$ ou $0$, de uma variante de um gene relevante para sobreviver ao choque séptico, talvez um gene cuja importância __ainda não foi descoberta__;
+    + ... $u_i$ indique o tipo específico de bactéria responsável pela infecção, incluindo sua resistência a vários antibióticos;
+    + ... $u_i$ registre a extensão da experiência do médico residente envolvido no cuidado do paciente $i$;
+    - ... $u_i$ descreva o suporte social disponível para o paciente $i$.
+
+## Covariáveis: comentários
+
+1. As covariáveis, $x_i$ ou $u_i$, existem em uma única versão.
+    + Em particular, o paciente i = 17 teria o $x_i$ dado na Tabela 2.1 se Harry é aleatorizado para o tratamento agressivo ou para o tratamento menos agressivo.
+2. Em um estudo completamente aleatorizado como o estudo ProCESS, a chance de qualquer paciente receber o tratamento agressivo __é a mesma__ que a chance de esse paciente receber o tratamento menos agressivo.
+    + Essa chance __não depende__ de $x_i$ e nem de $u_i$.
+    + Sabemos disso porque atribuímos tratamentos lançando uma moeda honesta.
+- A chance de que Harry seja designado para tratamento agressivo é $1/2$, e __não importa__, no que diz respeito a essa chance, que Harry tem 52 anos com uma escore APACHE II de 23.
+    + As coisas seriam diferentes na ausência de atribuição de tratamentos, mas o ensaio ProCESS foi aleatorizado.
+    
+# Atribuições de Tratamento
+
+## Atribuições de tratamento
+
+- $Z_i$ registra o tratamento atribuído ao paciente $i$.
+$$
+Z_i = \left\{\begin{array}{l}
+1,\ \mbox{se o paciente}\ i\ \mbox{foi atribuído ao tratamento agressivo,}\\
+0,\ \mbox{se o paciente}\ i\ \mbox{foi atribuído ao tratamento menos agressivo.}
+\end{array}\right.
+$$
+
+- Harry ($i = 17$) foi atribuído ao tratamento agressivo, $Z_{17} = 1$.
+
+## Atribuições de tratamento
+
+- Podemos reformular $Z_i$ em termos mais genéricos
+
+$$
+Z_i = \left\{\begin{array}{l}
+1,\ \mbox{se o paciente}\ i\ \mbox{foi atribuído ao tratamento,}\\
+0,\ \mbox{se o paciente}\ i\ \mbox{foi atribuído ao controle.}
+\end{array}\right.
+$$
+
+- $m$ representará o número de pacientes no grupo tratado (no estudo ProCESS, $m = 439$).
+
+## Atribuições de tratamento
+
+- O estudo ProCESS atribuiu tratamentos aleatoriamente lançando uma moeda honesta, de modo que $Z_i$ fosse uma quantidade aleatória assumindo o valor $Z_i = 1$ com probabilidade $1/2$ e o valor $Z_i = 0$ com probabilidade $1/2$.
+    + $\Pr(Z_i = 1) = 1/2 = \Pr(Z_i = 0)$.
+- Utilizaremos $\pi_i = \Pr (Z_i = 1)$ para designar a probabilidade do paciente $i$ ser designado ao grupo tratado.
+    + Como o estudo ProCESS é um ensaio completamente aleatorizado, $\pi_i = 1/2$ para $i = 1, \ldots , I$ em que $I = 885$.
+- Grande parte da complexidade da inferência causal surge quando $\pi_i$ varia de pessoa para pessoa de maneiras que não compreendemos completamente.
+
+## Atribuições de tratamento
+
+Estamos vendo que há uma enorme assimetria entre duas tarefas que se referem a todos os aspectos do passado de Harry antes do tratamento. Uma tarefa é usar todos os aspectos do passado de Harry para criar grupos tratados e de controle idênticos, o que não pode ser feito. A segunda tarefa é garantir que absolutamente nenhum aspecto do passado de Harry influencie sua designação de tratamento, o que é simples: você joga uma moeda justa. Felizmente, como visto no Capítulo 3, o sucesso na segunda tarefa direta é tudo o que é necessário para a inferência causal.
+
+# Efeitos Causados por Tratamentos
+
+# Médias em Populações e Amostras
+
+# Efeitos Causais Médios
+
+## Avisos
+
+- __Para casa:__ Ler o Capítulo 3 do livro do Paul R. Rosenbaum.
+- __Próxima aula:__ Discussão do Capítulo 3 do livro do Paul R. Rosenbaum.
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'electoral-causality-loop.jpg'))
+
+```
+

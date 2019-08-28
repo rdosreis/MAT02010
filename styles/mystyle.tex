@@ -1,3 +1,5 @@
+\usepackage{multirow}
+\usepackage{xcolor}
 \newcount\tmpnum
 \def\tallymarks#1{\leavevmode \lower1bp\vbox to9bp{}%
    \tmpnum=#1
@@ -20,7 +22,14 @@
 \setbeamertemplate{enumerate items}[default]
 \setbeamertemplate{footline}{}
 \setbeamercolor{alerted text}{fg=purple}
+\titlegraphic{\hfill\includegraphics[height=1cm]{logos/Logo-40-anos-estatistica.png}}
 
-\def\Var{{\rm Var}\,}
-\def\E{{\rm E}\,}
+\def\Corr{\mbox{Corr}\,}
+\def\Cov{\mbox{Cov}\,}
+\def\Var{\mbox{Var}\,}
+\def\E{\mbox{E}\,}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{darkpastelgreen}{rgb}{0.01, 0.75, 0.24}
+\definecolor{darkpastelpurple}{rgb}{0.59, 0.44, 0.84}
+\definecolor{darkpastelred}{rgb}{0.76, 0.23, 0.13}
 
