@@ -10,6 +10,12 @@ knitr::include_graphics(here('images', 'process_covariate_patient17.png'))
 
 
 
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', paged.print=FALSE----
+
+knitr::include_graphics(here('images', 'process_mortality_outcomes.png'))
+
+
+
 ## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE----
 
 knitr::include_graphics(here('images', 'electoral-causality-loop.jpg'))
