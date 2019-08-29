@@ -120,8 +120,8 @@ $$
 - $r_{C_i}$ e $r_{T_i}$ representam os desfechos potenciais no indivíduo $i$.
     + $r_{C_i}$ é a desfecho que teria sido observado caso o paciente $i$ fosse atribuído ao protocolo menos agressivo (controle).
     + $r_{T_i}$ é a desfecho que teria sido observado caso o paciente $i$ fosse atribuído ao protocolo agressivo (tratamento).
-- Se o paciente $i$ foi atribuído ao tratamento, então ira exibir o desfecho $r_{T_i}$, mas não exibirá $r_{C_i}$.
-- Se o paciente $i$ foi atribuído ao controle, então ira exibir o desfecho $r_{C_i}$, mas não exibirá $r_{T_i}$.
+- Se o paciente $i$ foi atribuído ao tratamento, então irá exibir o desfecho $r_{T_i}$, mas não exibirá $r_{C_i}$.
+- Se o paciente $i$ foi atribuído ao controle, então irá exibir o desfecho $r_{C_i}$, mas não exibirá $r_{T_i}$.
 
 ## Desfechos potenciais sob tratamentos alternativos
 
