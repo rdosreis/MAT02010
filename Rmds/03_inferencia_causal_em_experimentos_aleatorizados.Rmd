@@ -1,0 +1,39 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Inferência Causal em Experimentos Aleatorizados"
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+---
+
+# Nenhum efeito é plausível?
+
+# O ensaio de uniformidade
+
+# Testando nenhum efeito: um exemplo pequeno
+
+# Comparando tratamentos no estudo ProCESS
+
+# Quão grande é o efeito?
+
+## Avisos
+
+- __Para casa:__ Ler o Capítulo 4 do livro do Paul R. Rosenbaum.
+- __Próxima aula:__ Discussão do Capítulo 4 do livro do Paul R. Rosenbaum.
+    + A discussão deste capítulo será condizida pelos estudantes da turma.
+    + Ver Cap. 1 do livro __"Statistics: a guide to the unknown"__.
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'working-causality-loop.jpg'))
+
+```
+
