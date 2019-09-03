@@ -215,7 +215,7 @@ $$
 - Por exemplo, o escore APACHE II foi medido para todos os $I = 885$ pacientes na Tabela 1.1.
 - A média dos $I = 885$ escores APACHE II é $20,7$, e geralmente escrevemos $\bar{v}$ para uma média.
 - A média, $\bar{v}$, é a soma do $v_i$ dividido pelo número de termos na soma ($I$).
-    + Ou seja, $\bar{v} = 20,7 = (1/885) (v_1 + v_2 + \ldots + v885) = (1 / I) (v_1 + v_2 + \ldots v_I)$.
+    + Ou seja, $\bar{v} = 20,7 = (1/885) (v_1 + v_2 + \ldots + v_{885}) = (1 / I) (v_1 + v_2 + \ldots v_I)$.
     
 ## Médias amostrais ($\hat{v}_T$ e $\hat{v}_C$)
 
