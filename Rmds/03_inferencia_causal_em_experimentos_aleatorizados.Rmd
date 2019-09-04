@@ -192,14 +192,92 @@ knitr::include_graphics(here('images', 'small_example_t_dist_resumo.png'))
 - $T \geq 4$ é morte demais para ser "devido ao acaso".
 - Como observamos $T \geq 4$ e $T \geq 4$ é improvável quando a hipótese nula de nenhum efeito for verdadeira, dizemos que a Tabela 3.3 constitui evidência bastante forte contra a hipótese nula em nosso pequeno experimento aleatório.
 
+## Valor-$P$
+
+- A quantidade calculada, $\Pr(T\geq t) = 1/70$, é conhecida como o valor-$P$ unilateral ao testar a hipótese nula de ausência de efeito.
+- Se o valor-$P$ é __pequeno__, então o valor da estatística de teste $T$ tão grande ou mais que o valor observado, aqui 4, __seria improvável__ se a hipótese nula fosse verdadeira.
+    + Valor-$P$ pequeno conta como evidência contra a hipótese nula.
+- Por uma convenção arbitrária e bem entranhada, o valor-$P$ de 0,05 ou menos é julgado pequeno, e valor-$P$ acima de 0,05 é julgado não pequeno.
+
+## Rejeitando ou aceitando a hipótese nula
+
+- Diz-se às vezes que uma hipótese nula é "rejeitada" se o valor-$P$ está abaixo de algum ponto de corte $\alpha$, convencionalmente $\alpha = 0,05$, e "aceita" de outra forma.
+    + Diríamos que a Tabela 3.3 nos levou a rejeitar a hipótese de nenhum efeito no nível $\alpha = 0,05$.
+- Essa maneira de falar tem um papel útil, mas também é fonte de mais do que um pouco de confusão.
+    + O papel útil decorre da necessidade de falar de cometer um erro no teste de hipóteses, da necessidade de manter a frequência dos erros sob controle.
+    + Por exemplo, um erro é descrito como "rejeitar falsamente uma hipótese nula verdadeira".
+    + A confusão deriva dos termos "aceitar" e "rejeitar".
+
+## Rejeitando ou aceitando a hipótese nula
+
+- "Rejeitar falsamente uma verdadeira hipótese nula" é uma maneira admiravelmente concisa, mas imprecisa, de dizer "alegar ter fornecido evidências relativamente fortes contra uma hipótese nula quando a hipótese é de fato verdadeira".
+    + Isso costuma ser chamado de "erro tipo 1" e mais sugestivamente chamado de "falsa rejeição" ou, às vezes, "falsa descoberta".
+- Paralelamente, "aceitar falsamente uma hipótese nula falsa" é uma maneira concisa, mas bastante enganosa, de dizer "não fornecer muitas evidências de uma maneira ou de outra sobre se uma hipótese nula é verdadeira".
+    + Isso geralmente é chamado de "erro tipo 2" e pode ser mais sugestivamente chamado de "falha em fornecer muitas evidências".
+
+## Rejeitando ou aceitando a hipótese nula
+
+- É um erro enorme e imperdoável interpretar "aceitar uma hipótese nula" como evidência de que a hipótese nula é verdadeira.
+    + "Aceitar uma hipótese nula" significa deixar de fornecer muita evidência sobre se é verdadeira ou falsa.
+- Se você quisesse fornecer fortes evidências de que o tratamento agressivo e o tratamento menos agressivo diferiam desprezivelmente em seus efeitos, então você não faria isso "aceitando a hipótese nula".
+
+## Teste exato de Fisher: a "base racional para inferência"
+
+- O teste na Tabela 3.5 é geralmente chamado de "teste exato de Fisher" para uma tabela $2 \times 2$ e foi introduzido no capítulo 2 do livro de Fisher de 1935, __Design of Experiments__.
+- O nome popular, "teste exato de Fisher", não transmite os aspectos do teste que interessaram a Fisher.
+- A palavra "exato" significa que a distribuição na Tabela 3.5 é exatamente a distribuição da estatística de teste $T$ em um experimento completamente aleatorizado quando a hipótese nula de Fisher é verdadeira.
+    + Ou seja, a Tabela 3.5 é exatamente a distribuição nula de $T$, e não uma aproximação à sua distribuição nula.
+- As aproximações são amplamente usadas em inferência estatística e, em geral, quando essas aproximações são bem projetadas, elas funcionam bem.
+    + (Voltaremos a este tópico nas próximas aulas).
+
+## Teste exato de Fisher: a "base racional para inferência"
+
+- No capítulo 2 de seu  __Design of Experiments__, Fisher falou da aleatorização em experimentos como a __"base racional da inferência"__ nos experimentos.
+    + Ele estava tentando transmitir duas coisas, uma sobre sua hipótese nula de nenhum efeito e a outra sobre a origem das distribuições de probabilidade.
+    
+## Teste exato de Fisher: a "base racional para inferência"
+
+- A hipótese de Fisher de nenhum efeito de tratamento é uma hipótese nula que __fala diretamente__ sobre os __efeitos causados__ pelos tratamentos.
+    + Especificamente, a hipótese nega que exista algum efeito, portanto, alterar o tratamento que uma pessoa recebe não altera a resposta da pessoa.
+- Diferentemente das hipóteses sobre parâmetros nos modelos estatísticos, a hipótese nula de Fisher está falando direta e claramente sobre o aspecto mais básico da questão científica que motivou o experimento: o tratamento causou algum efeito?
+    + Existe alguma evidência convincente de que o tratamento seja ativo para produzir algum efeito?
+
+## Teste exato de Fisher: a "base racional para inferência"
+
+- De onde vêm as distribuições de probabilidade?
+    + Como sabemos que o modelo de probabilidade usado em uma análise estatística específica é o modelo correto, ou um modelo razoável?
+<!-- - Se essas perguntas são pouco discutidas, é porque a maioria dos analistas não tem respostas excelentes. -->
+<!-- - Mas Fisher tem uma excelente resposta. -->
+- A distribuição nula na Tabela 3.5 foi derivada dos lançamentos de moedas que designavam os pacientes para tratamento ou controle - não há nada especulativo sobre isso.
+- Você pode negar a correção da distribuição da aleatorização apenas acusando os investigadores de mentirem sobre a maneira como eles conduziram seu experimento e realizaram sua análise: se eles não estavam mentindo, se eles realmente utilizaram aleatorização, então a __distribuição da aleatorização__ é a distribuição nula correta para $T$ na Tabela 3.5.
+- De onde veio a distribuição nula de Fisher?
+    + Da moeda na mão de Fisher.
+
 # Comparando tratamentos no estudo ProCESS
 
-# Quão grande é o efeito?
+## Testando a hipótese de ausência de efeito de tratamento
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+ProCESS <- matrix(c(92, 81, 347, 365), 2, 2)
+fisher.test(ProCESS, alternative = "greater")
+```
+
+## Testando a hipótese de ausência de efeito de tratamento
+
+- Para o estudo ProCESS, descobrimos que a Tabela 3.1 não seria digna de nota se a hipótese de Fisher fosse verdadeira.
+- Nesse sentido, a hipótese de Fisher não é contradita pelos resultados do estudo ProCESS.
+- Descobrir que a Tabela 3.1 não seria digna de nota se a hipótese fosse verdadeira é descobrir que __há uma ausência de evidência contra a hipótese__;
+    + No entanto, uma ausência de evidência contra a hipótese não é, por si só, evidência de que a hipótese é verdadeira.
+
+## Testando a hipótese de ausência de efeito de tratamento
+
+- De fato, nunca podemos ter evidências de que a hipótese de Fisher seja verdadeira, mas poderíamos ter fortes evidências de que ela é falsa.
+- Afirmar que a hipótese de Fisher é verdadeira é dizer que nenhum paciente foi beneficiado e nenhum foi prejudicado pelo protocolo agressivo e, em particular, que o paciente $i = 17$, Harry, não sobreviveu porque recebeu o protocolo agressivo;
+    + No entanto, como vimos várias vezes, não estamos e não podemos estar em posição de fazer tais alegações sobre pacientes individuais.
 
 ## Avisos
 
 - __Para casa:__ Ler o Capítulo 4 do livro do Paul R. Rosenbaum.
-    + Ler o Capítulo 5 do livro de Guido Imbens e Donald Rubin.
     + Ler o artigo "Statistics and Causal Inference" do Paul Holland.
 - __Próxima aula:__ Discussão do Capítulo 4 do livro do Paul R. Rosenbaum.
     + A discussão deste capítulo será condizida pelos estudantes da turma.

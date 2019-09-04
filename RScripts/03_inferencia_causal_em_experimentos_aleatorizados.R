@@ -41,6 +41,11 @@ knitr::include_graphics(here('images', 'small_example_t_dist_resumo.png'))
 
 
 
+## ---- echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE-----------------
+ProCESS <- matrix(c(92, 81, 347, 365), 2, 2)
+fisher.test(ProCESS, alternative = "greater")
+
+
 ## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='80%', paged.print=FALSE----
 
 knitr::include_graphics(here('images', 'Fisher_colorido.png'))
