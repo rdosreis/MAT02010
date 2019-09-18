@@ -1,0 +1,114 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Entre estudos observacionais e experimentos"
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+---
+
+# A distinção entre experimentos e estudos observacionais
+
+## A distinção entre experimentos e estudos observacionais
+
+- O que é um experimento?
+- O que é um estudo observacional?
+- Qual o objetivo de um estudo observacional?
+
+- Qual a diferença entre experimentos e estudos observacionais?
+- Qual o problema central em um estudo observacional?
+
+# Um passo além do experimento completamente aleatório
+
+## Um experimento com um dos problemas de um estudo observacional
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'table_5_1.png'))
+
+```
+
+## Um experimento com um dos problemas de um estudo observacional
+
+- Do que trata o experimento?
+- O que sabemos sobre o efeito causal?
+
+- Como os indivíduos foram alocados aos grupos de tratamento?
+- Qual a relação, ou qual a diferença deste estudo para um experimento completamente aleatorizado?
+- Qual o papel das covariáveis aqui?
+- O que é um estrato?
+
+- Quais  as conclusões que chegamos (para cada estrato)?
+
+## Um experimento com um dos problemas de um estudo observacional
+
+__O problema!__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'table_5_2.png'))
+
+```
+
+- A qual conclusão chegamos?
+
+## O Paradoxo de Simpson
+
+- Como podemos caracterizar o paradoxo de Simpson?
+- Há algum paradoxo de fato?
+- Qual o __lembrete__ irritante (importante) de Simpson?
+
+## Ajuste direto: um método para estimar os efeitos médios do tratamento
+
+- Estimativa ajustada:
+
+$$
+(39,9 - 40,3) / 4 + (30,1 - 29,8) / 4 + (19,9 - 20,0) / 4
++ (10,2 - 9,9) / 4 = 0,025.
+$$
+
+- O que entendemos por ajuste direto?
+- Qual a relação desta abordagem com respeito à estimativa de $\bar{\delta}$ em um experimento completamente aleatorizado?
+
+## Um único teste de hipóteses combinando resultados estrato-específicos
+
+- Neste estudo, é possível testar a hipótese nula de Fisher de nenhum efeito de tratamento?
+
+- Se sim, de que forma isto é feito?
+
+- Se sim, qual a diferença de realizar tal teste e um teste exato de Fisher na Tabela 5.2?
+
+## É importante conhecer as probabilidades de atribuição de tratamento?
+
+- É importante conhecer as probabilidades de atribuição de tratamento?
+- Qual o atributo importante deste experimento para que possamos concluir adequadamente?
+
+## O que aprendemos com esse experimento aleatório peculiar?
+
+- Como nos referimos a este tipo de estudo?
+- O que buscaremos, em termos de delineamento/métodos, em estudos observacionais para concluirmos a respeito de associações causais?
+- Qual a crítica central em um estudo observacional?
+
+# Avisos
+
+## Avisos
+
+- __Próxima semana:__ não haverá aula!
+- __Para casa (para entregar):__ (1) Ler a Seção "Crying Babies" do Capítulo 5 do livro do Paul R. Rosenbaum e fazer um resumo. (2) Realize uma pequena pesquisa sobre o Paradoxo de Simpson. (3) Escreva um código para reproduzir os dados simulados da Tabela 5.1.
+- __Para casa:__ Ler o restante do Capítulo 5.
+    + Ler o artigo "Statistics and Causal Inference" do Paul Holland.
+- __Próxima aula (02/10):__ Continuação da discussão do Capítulo 5 do livro do Paul R. Rosenbaum.
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'working-causality-loop.jpg'))
+
+```
+
