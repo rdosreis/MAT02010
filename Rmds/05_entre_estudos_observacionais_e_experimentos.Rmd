@@ -23,7 +23,7 @@ date: |
 - Qual a diferença entre experimentos e estudos observacionais?
 - Qual o problema central em um estudo observacional?
 
-# Um passo além do experimento completamente aleatório
+# Um passo além do experimento completamente aleatorizado
 
 ## Um experimento com um dos problemas de um estudo observacional
 
@@ -49,7 +49,7 @@ knitr::include_graphics(here('images', 'table_5_1.png'))
 
 __O problema!__
 
-```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE, purl=FALSE}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE, purl=FALSE}
 
 knitr::include_graphics(here('images', 'table_5_2.png'))
 
@@ -68,8 +68,7 @@ knitr::include_graphics(here('images', 'table_5_2.png'))
 - Estimativa ajustada:
 
 $$
-(39,9 - 40,3) / 4 + (30,1 - 29,8) / 4 + (19,9 - 20,0) / 4
-+ (10,2 - 9,9) / 4 = 0,025.
+(39,9 - 40,3) / 4 + (30,1 - 29,8) / 4 + (19,9 - 20,0) / 4 + (10,2 - 9,9) / 4 = 0,025.
 $$
 
 - O que entendemos por ajuste direto?
@@ -88,7 +87,7 @@ $$
 - É importante conhecer as probabilidades de atribuição de tratamento?
 - Qual o atributo importante deste experimento para que possamos concluir adequadamente?
 
-## O que aprendemos com esse experimento aleatório peculiar?
+## O que aprendemos com esse experimento aleatorizado peculiar?
 
 - Como nos referimos a este tipo de estudo?
 - O que buscaremos, em termos de delineamento/métodos, em estudos observacionais para concluirmos a respeito de associações causais?
