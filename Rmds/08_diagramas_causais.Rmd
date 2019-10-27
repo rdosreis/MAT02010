@@ -1,0 +1,1400 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Diagaramas causais: uma introdução"
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+---
+
+# O que é inferência causal?
+
+## O que é inferência causal?
+
+- A inferência causal é a ciência de __inferir a presença e a magnitude das relações de causa e efeito a partir dos dados__.
+- Como estatísticos, epidemiologistas, sociólogos, etc., e de fato como seres humanos, é algo sobre o qual __sabemos muito__.
+    + Suponha que um estudo encontre uma associação entre a propriedade paterna de gravata de seda e a mortalidade infantil.
+    + Com base nisso, o governo implementa um programa no qual 5 gravatas de seda são dadas a todos os homens com idade de 18-45 anos, com o objetivo de reduzir a mortalidade infantil.
+- Nós todos concordamos que isso é uma bobagem!
+- Isso porque entendemos a diferença entre associação e causalidade.
+
+## O que é inferência causal?
+
+A área de inferência causal consiste em (pelo menos) três partes:
+
+1. Uma __linguagem formal__ para definir inequivocamente conceitos causais.
+2. __Diagramas causais:__ uma ferramenta para exibir claramente nossas suposições causais.
+3. __Métodos de análise__ (isto é, métodos estatísticos) que podem nos ajudar a tirar conclusões causais mais confiáveis a partir dos dados disponíveis.
+
+# Um pouco de dor de cabeça!
+
+## Um exemplo
+
+- 12 senhoras estão sofrendo de __dor de cabeça__.
+- Algumas tomam __aspirina__; outras não.
+- Uma hora depois, perguntamos para cada uma delas se a dor de cabeça __sumiu (passou)__.
+
+## Os dados observados
+
+|           | $Z$ (tomou aspirina?) | $R$ (dor de cabeça sumiu?) |
+| :-------- | :-------------------: | :------------------------: |
+| Mary      |           0           |             0              |
+| Anna      |           1           |             0              |
+| Emma      |           1           |             1              |
+| Elizabeth |           0           |             0              |
+| Minnie    |           0           |             1              |
+| Margaret  |           1           |             0              |
+| Ida       |           1           |             0              |
+| Alice     |           0           |             0              |
+| Bertha    |           0           |             1              |
+| Sarah     |           0           |             0              |
+| Annie     |           0           |             1              |
+| Clara     |           1           |             1              |
+
+## Os dados observados
+
+|                       | $Z$ (tomou aspirina?) | $R$ (dor de cabeça sumiu?) |
+| :-------------------- | :-------------------: | :------------------------: |
+| Mary                  |           0           |             0              |
+| Anna                  |           1           |             0              |
+| \textcolor{red}{Emma} |  \textcolor{red}{1}   |     \textcolor{red}{1}     |
+| Elizabeth             |           0           |             0              |
+| Minnie                |           0           |             1              |
+| Margaret              |           1           |             0              |
+| Ida                   |           1           |             0              |
+| Alice                 |           0           |             0              |
+| Bertha                |           0           |             1              |
+| Sarah                 |           0           |             0              |
+| Annie                 |           0           |             1              |
+| Clara                 |           1           |             1              |
+
+## Os dados observados
+
+- Emma tomou aspirina ($Z = 1$) e a sua dor de cabeça passou ($R = 1$).
+- A aspirina causou o desaparecimento da sua dor de cabeça?
+
+## Relembrando
+
+A estrutura da inferência causal:
+
+- $Z$ é o tratamento atribuído: tomou aspirina?
+- $R$ é o desfecho/resposta: dor de cabeça sumiu?
+- $r_C$ e $r_T$ representam os __desfechos potenciais__.
+    + $r_C$ é a resposta que teria sido observada caso a aspirina NÃO tivesse sido tomada.
+    + $r_T$ é a resposta que teria sido observada caso a aspirina tivesse sido tomada.
+- Uma destas respostas é observada: se $Z = 0$, $r_C$ é observada; se $Z = 1$, $r_T$ é observada.
+    + Ou seja, $R = Z\times r_T + (1 - Z)\times r_C$.
+    + A outra é __contrafactual__.
+
+## Os dados ideais
+
+|                       |       $r_C$        |       $r_T$        |
+| :-------------------- | :----------------: | :----------------: |
+| Mary                  |         0          |         0          |
+| Anna                  |         1          |         0          |
+| \textcolor{red}{Emma} | \textcolor{red}{0} | \textcolor{red}{1} |
+| Elizabeth             |         0          |         0          |
+| Minnie                |         1          |         1          |
+| Margaret              |         0          |         0          |
+| Ida                   |         0          |         0          |
+| Alice                 |         0          |         0          |
+| Bertha                |         1          |         0          |
+| Sarah                 |         0          |         0          |
+| Annie                 |         1          |         1          |
+| Clara                 |         0          |         1          |
+
+## Os dados ideais
+
+Com o par de desfechos potenciais, podemos responder as seguintes perguntas:
+
+- A aspirina causou o desaparecimento da dor de cabeça de Emma?
+    - E de Margaret?
+    - E de Clara?
+    - E de Alice?
+
+## Os dados ideais
+
+| $i$       | $r_{C_i}$ | $r_{T_i}$ | $\delta_i = r_{T_i} - r_{C_i}\neq 0\ ?$ (efeito causal?) |
+| :-------- | :-------: | :-------: | :------------------------------------------------------- |
+| Mary      |     0     |     0     | Não                                                      |
+| Anna      |     1     |     0     | Sim, prejudicial                                         |
+| Emma      |     0     |     1     | Sim, benéfico                                            |
+| Elizabeth |     0     |     0     | Não                                                      |
+| Minnie    |     1     |     1     | Não                                                      |
+| Margaret  |     0     |     0     | Não                                                      |
+| Ida       |     0     |     0     | Não                                                      |
+| Alice     |     0     |     0     | Não                                                      |
+| Bertha    |     1     |     0     | Sim, prejudicial                                         |
+| Sarah     |     0     |     0     | Não                                                      |
+| Annie     |     1     |     1     | Não                                                      |
+| Clara     |     0     |     1     | Sim, benéfico                                            |
+
+## O problema fundamental da inferência causal
+
+| $i$       | $r_{C_i}$ | $r_{T_i}$ | $Z_i$ | $R_i$ |
+| :-------- | :-------: | :-------: | :---: | :---: |
+| Mary      |     0     |     \textcolor{red}{?}     |   0   |   0   |
+| Anna      |     \textcolor{red}{?}     |     0     |   1   |   0   |
+| Emma      |     \textcolor{red}{?}     |     1     |   1   |   1   |
+| Elizabeth |     0     |     \textcolor{red}{?}     |   0   |   0   |
+| Minnie    |     1     |     \textcolor{red}{?}     |   0   |   1   |
+| Margaret  |     \textcolor{red}{?}     |     0     |   1   |   0   |
+| Ida       |     \textcolor{red}{?}     |     0     |   1   |   0   |
+| Alice     |     0     |     \textcolor{red}{?}     |   0   |   0   |
+| Bertha    |     1     |     \textcolor{red}{?}     |   0   |   1   |
+| Sarah     |     0     |     \textcolor{red}{?}     |   0   |   0   |
+| Annie     |     1     |     \textcolor{red}{?}     |   0   |   1   |
+| Clara     |     \textcolor{red}{?}     |     1     |   1   |   1   |
+
+## Efeitos causais populacionais
+
+- $\delta_i = r_{T_i} - r_{C_i} =\color{red}{?}$, para todo indivíduo $i$, pois um dos desfechos potenciais nunca é observado.
+- Um objetivo menos ambicioso é focar no __efeito causal médio__ (ou em nível populacional):
+
+$$
+\overline{\delta} = \overline{r}_T - \overline{r}_C.
+$$
+
+- No caso em que a resposta é dicotômica, temos
+
+$$
+\overline{\delta} = \Pr(r_T = 1) - \Pr(r_C = 1).
+$$
+
+## Efeitos causais populacionais
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'ex_dor_cabeca.png'))
+
+```
+
+- $\overline{r}_T = \Pr(r_T = 1) = 4/12$ e $\overline{r}_C = \Pr(r_C = 1) = 4/12$, e portanto,
+
+$$
+\overline{\delta} = \overline{r}_T - \overline{r}_C = \frac{4}{12} - \frac{4}{12} = 0.
+$$
+
+- Ou seja, __não existe__ efeito causal em nível populacional.
+
+## Efeitos causais populacionais
+
+- Em verdade, __não sabemos__ $r_T$ para cada indivíduo, então __não podemos simplesmente estimar__ $\Pr(r_T = 1)$ como a proporção de todos os indivíduos com $r_T = 1$.
+- Da mesma forma, __não podemos simplesmente estimar__ $\Pr(r_C = 1)$ como a proporção de todos os indivíduos com $r_C = 1$.
+- Assim, __não podemos estimar__ facilmente $\overline{\delta} = \Pr(r_T = 1) - \Pr(r_C = 1)$ pelo mesmo motivo que não podemos estimar $\delta_i = r_{T_i} - r_{C_i}$.
+- A inferência causal __é toda sobre a escolha de quantidades dos dados observados__ (isto é, envolvendo $Z$, $R$ e outras variáveis observadas) __que representam substitutos razoáveis__ para quantidades hipotéticas tais como $\overline{\delta}$, que envolvem contrafactuais não observáveis.
+
+## Quando associção é igual a causalidade?
+
+- O que pode ser um bom substituto para $\Pr(r_T = 1)$?
+    + E quanto a $\hat{r}_T = \Pr(R = 1 | Z = 1)$?
+    + Esta é a proporção de "dor de cabeça desapareceu" entre aquelas que realmente tomaram a aspirina.
+    + Isso é o mesmo que $\Pr(r_T = 1)$?
+        - Somente se aquelas que tomaram a aspirina forem __intercambiáveis__ com aquelas que não o fizeram.
+- Este seria o caso se a escolha de tomar a aspirina fosse feita ao acaso.
+- É por isso que __experimentos aleatorizados__ são o __padrão-ouro__ para inferir efeitos causais.
+
+## Quando associção é igual a causalidade?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='40%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'ex_dor_cabeca2.png'))
+
+```
+
+- $\hat{r}_T = \Pr(R = 1 | Z = 1) = 2/5$ e $\hat{r}_C = \Pr(R = 1 | Z = 0) = 3/7$, e portanto,
+
+$$
+\hat{\delta} = \hat{r}_T - \hat{r}_C = \frac{2}{5} - \frac{3}{7} = - \frac{1}{35}.
+$$
+
+- Se assumirmos "associação = causalidade", concluiremos que a aspirina foi, em média, prejudicial.
+
+## Mas, e se ...
+
+... as senhoras com uma dor de cabeça __mais forte__ (grave) fossem __mais propensas__ a tomarem a aspirina?
+
+- Neste caso, "associação $\neq$ causalidade"!
+
+## Levando em conta a gravidade
+
+- Suponha que perguntamos a cada uma das 12 senhoras no início do estudo: __"sua dor de cabeça é forte?"__.
+    + Então, poderíamos propor que, depois de levar em conta a gravidade, a decisão de tomar ou não a aspirina fosse efetivamente tomada de forma aleatória.
+- Suponha que $X$ denota a gravidade. Então, sob essa suposição, __dentro dos estratos__ de $X$, os indivíduos expostos e não expostos podem ser __intercambiáveis__.
+- Isso é chamado de __intercambiabilidade (permutabilidade) condicional__ (dado $X$).
+- Sob intercambiabilidade condicional dada $X$, "associação = causalidade" __dentro dos estratos__ de $X$.
+
+## Levando em conta a gravidade
+
+
+| $i$       | $r_{C_i}$ | $r_{T_i}$ | $Z_i$ | $R_i$ | $X_i$ |
+| :-------- | :-------: | :-------: | :---: | :---: | :---: |
+| Mary      |     0     |     0     |   0   |   0   |   1   |
+| Anna      |     1     |     0     |   1   |   0   |   0   |
+| Emma      |     0     |     1     |   1   |   1   |   0   |
+| Elizabeth |     0     |     0     |   0   |   0   |   1   |
+| Minnie    |     1     |     1     |   0   |   1   |   0   |
+| Margaret  |     0     |     0     |   1   |   0   |   1   |
+| Ida       |     0     |     0     |   1   |   0   |   1   |
+| Alice     |     0     |     0     |   0   |   0   |   0   |
+| Bertha    |     1     |     0     |   0   |   1   |   1   |
+| Sarah     |     0     |     0     |   0   |   0   |   0   |
+| Annie     |     1     |     1     |   0   |   1   |   0   |
+| Clara     |     0     |     1     |   1   |   1   |   1   |
+
+## Estratificando por gravidade
+
+No estrato $X = 0$:
+
+- $\hat{r}_T = \Pr(R = 1 | Z = 1) = 1/2$ e $\hat{r}_C = \Pr(R = 1 | Z = 0) = 2/4$, e portanto,
+
+$$
+\hat{\delta} = \hat{r}_T - \hat{r}_C = \frac{1}{2} - \frac{2}{4} = 0.
+$$
+
+No estrato $X = 1$:
+
+- $\hat{r}_T = \Pr(R = 1 | Z = 1) = 1/3$ e $\hat{r}_C = \Pr(R = 1 | Z = 0) = 1/3$, e portanto,
+
+$$
+\hat{\delta} = \hat{r}_T - \hat{r}_C = \frac{1}{3} - \frac{1}{3} = 0.
+$$
+
+- Ou seja, dentro dos estratos __não existe__ efeito causal.
+
+## Exemplo da dor de cabeça: breves conclusões
+
+- De maneira mais geral, se __existe__ um efeito causal de $Z$ em $R$, mas também __uma associação não-causal__ devido a $X$, então o efeito causal será estimado com __viés__, a menos que estratifiquemos em $X$.
+    + Este viés será chamada de __viés de confundimento__ (ou viés de confusão) e $X$ será chamada de __variável confundidora__.
+
+## Exemplo da dor de cabeça: breves conclusões
+
+- A __intercambiabilidade condicional__ é o principal critério que nos permite fazer declarações causais usando __dados observacionais__.
+- Assim, precisamos identificar, se possível, um conjunto de (co)variáveis $X_1, X_2, \ldots$ , de tal forma que a intercambiabilidade condicional é válida, dado este conjunto de variáveis.
+- Na vida real, pode haver muitas variáveis candidatas $X$.
+- Estes podem ser __causalmente inter-relacionados__ de uma maneira __muito complexa__.
+- Decidir se os indivíduos expostos e o não expostos são  condicionalmente intercambiáveis, dado $X_1, X_2, \ldots$, __requer conhecimento detalhado do assunto__.
+- Os __diagramas causais__ podem nos ajudar a usar esse conhecimento para determinar se a intercambiabilidade condicional é válida ou não.
+
+# Introdução
+
+## Introdução
+
+- Pesquisa empírica e relações entre variáveis.
+- Modelos estatísticos.
+    - Propósitos dos modelos estatísticos: predição _versus_ explicação (exploratório, causalidade).
+    - Modelos estatísticos: o papel das variáveis, e a relação de dependência entre estas.
+- Na estatística, especificamos relações de dependência por meio de distribuições de probabilidades.
+
+## Introdução
+
+- __Grafos:__ na matemática e ciência da computação, grafos são usados para modelar objetos, representados por vértices (nós), e as suas relações, representadas por arestas.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.cap="Mapa da variável proporção de domicílios com 0-3 salários (Censo do IBGE de 2010) em Porto Alegre por bairros.", results='hide'}
+poa_bairro <- readRDS('C:\\Users\\Rodrigo\\Documents\\ELSA Project\\Segregacao\\Apresentacao\\poa_prop3.rds')
+library(RColorBrewer)
+library(spdep)
+# library(maptools)
+# library(rgdal)
+# library(rgeos)
+my.palette <- brewer.pal(n = 7, name = "RdYlBu")
+# spplot(poa_bairro, "prop_0_3", col.regions = rev(my.palette), cuts = 6)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, results='hide'}
+poa_wmat <- nb2mat(poly2nb(poa_bairro), style = "B")
+poa_wmat[1:10, 1:10]
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, out.height="60%", fig.align='center'}
+coords <- coordinates(poa_bairro)
+par(mar=c(0,0,0,0))
+plot(poa_bairro)
+plot(poly2nb(poa_bairro, queen = FALSE), coords, add = T, col = "steelblue", lwd = 2)
+```
+
+## Introdução
+
+- __DAGs:__ Grafos acíclicos dirigidos (_Directed acyclic graphs_)
+    + Diagramas causais
+    + Modelos causais
+    + Modelos gráficos
+    + Modelos de equações estruturais não paramétricos
+    + Modelos causais estruturais
+
+# Preliminares
+
+## Como duas variáveis podem estar associadas na população?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'associa1.png'))
+
+```
+
+- Duas variáveis $X$ e $Y$ serão __associadas__ na população se $X$ causa $Y$.
+
+## Como duas variáveis podem estar associadas na população?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'associa2.png'))
+
+```
+
+- $X$ e $Y$ serão associadas na população se $Y$ causa $X$.
+
+## Como duas variáveis podem estar associadas na população?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'associa3.png'))
+
+```
+
+- Por fim, $X$ e $Y$ serão associadas na população se existir alguma variável $Z$ que causa __ambas__ $X$ e $Y$.
+
+## Como duas variáveis podem estar associadas na população?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'associa6.png'))
+
+```
+
+- $X$ e $Y$ não podem ser associadas na população por qualquer outra razão.
+- Se $X$ e $Y$ são associadas na população, então __pelo menos uma__ das situações acima deve ser verdade.
+
+## O que queremos dizer com associação "na população"?
+
+- Na terminologia estatística, $X$ e $Y$ são associadas "na população" significa que estas variáveis são __marginalmente associadas__.
+- Se $X$ e $Y$ são marginalmente associadas, então, para um indivíduo em particular, saber a respeito de $X$ nos dá alguma informação sobre o valor provável de $Y$, e vice-versa.
+- Suponha, por simplicidade, $X$ e $Y$ dicotômicas. Se $X$ e $Y$ são marginalmente associadas, então
+
+$$
+\Pr( Y = 1 | X = 1 ) \neq \Pr( Y = 1 | X = 0 )
+$$
+
+e
+
+$$
+\Pr( X = 1 | Y = 1 ) \neq \Pr( X = 1 | Y = 0 )
+$$
+
+<!-- - A seguir, falaremos de __associação condicional__, ou associação em uma __subpopulação__. -->
+
+## Como duas variáveis podem estar associadas em uma subpopulação?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'associa4.png'))
+
+```
+
+- Suponha que Z é um __efeito__ tanto de $X$ como de $Y$.
+- Então, $X$ e $Y$ serão __associadas dentro do estrato de $Z$__, mesmo se na população estas variáveis forem independentes.
+- $X$ e $Y$ serão condicionalmente associadas (dado $Z$), mesmo que sejam marginalmente independentes (não associadas).
+- A caixa ao redor de $Z$ denota que estamos estratificando (condicionando) em $Z$.
+- A reta tracejada denota a associação condicional induzida.
+
+## Como duas variáveis podem estar associadas em uma subpopulação?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='35%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'associa5.png'))
+
+```
+
+- Suponha que uma escola aceita alunos ou porque são "bons" no __esporte__, ou porque são "bons" __academicamente__; ou ainda, alunos que são "bons" nos dois.
+- Suponha que a habilidade acadêmica e a habilidade no esporte sejam __independentes__ na população.
+- __Dentro da escola__, existirá uma associação (negativa) entre habilidade acadêmica e habilidade no esporte.
+- Por que? Suponha que escolhemos um aluno ao acaso e percebemos que ele não tem habilidade nos esportes. Então, este deve ser "bom" academicamente.
+
+## Resumindo
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'associa7.png'))
+
+```
+
+- $X$ e $Y$ serão __associadas na população__ se:
+    + $X$ causa $Y$.
+    + $Y$ causa $X$.
+    + existe uma $Z$ que é causa comum de $X$ e $Y$.
+- $X$ e $Y$ serão __associadas em subpopulações definadas por $Z$__ se $Z$ é um __efeito__ de $X$ e $Y$.
+
+# DAGs: uma introdução mais formal
+
+## Um exemplo
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia1.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Grafo acíclico dirigido}
+\begin{itemize}
+\item Este é um exemplo de um \structure{grafo acíclico dirigido} (DAG) causal (diagrama causal).
+\item É \structure{dirigido}, pois cada aresta é uma seta de ponta única.
+\item É \structure{causal}, pois as setas representam nossas suposições a respeito da direção da influência causal.
+\item É \structure{acíclico}, pois não contém ciclos: nenhuma variável causa a si mesma.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia2.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Pais e filhos}
+\begin{itemize}
+\item $A$ é \structure{pai} (ou \structure{mãe}) de $C$.
+\item $C$ é \structure{filho} (ou \structure{filha}) de $A$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia3.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Ancestrais e descendentes}
+\begin{itemize}
+\item $A$ é um \structure{ancestral} de $D$.
+\item $D$ é \structure{descendente} de $A$.
+\item $A$ também é um \structure{ancestral} de $C$.
+\item $C$ também é um \structure{descendente} de $A$.
+\begin{itemize}
+\item Ou seja, pais são ancestrais, e filhos são descendentes.
+\end{itemize}
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia4.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Caminho}
+\begin{itemize}
+\item Este é um \structure{caminho} de $E$ para $B$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia5.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Caminho dirigido}
+\begin{itemize}
+\item Este é um \structure{caminho dirigido} de $A$ para $F$ (todas as setas no caminho apontam ``para frente'').
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia6.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Caminho back-door}
+\begin{itemize}
+\item Este é um \structure{caminho porta dos fundos} de $E$ para $D$ (o caminho começa com uma seta \structure{chegando em} $E$).
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia7.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Collider}
+\begin{itemize}
+\item $F$ é um \structure{colisor} desde que duas pontas de setas se encontram em $F$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia8.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{alertblock}{Nota}
+\begin{itemize}
+\item Note que $C$ é um colisor no caminho $A\rightarrow C \leftarrow B$.
+\end{itemize}
+\end{alertblock}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia9.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{alertblock}{Nota}
+\begin{itemize}
+\item No entanto, $C$ NÃO É um colisor no caminho $E\leftarrow C \rightarrow D$.
+\item Assim, a definição de um colisor é em relação ao caminho que está sendo considerado.
+\end{itemize}
+\end{alertblock}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia10.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Caminho bloqueado}
+\begin{itemize}
+\item O caminho $E\rightarrow F \leftarrow D$ é \structure{bloqueado} desde que este contenha um colisor ($F$).
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia11.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Caminho bloqueado}
+\begin{itemize}
+\item Este caminho também é bloqueado (em $C$).
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia12.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Caminho aberto}
+\begin{itemize}
+\item Um caminho que não contém um colisor está \structure{aberto}. Aqui temos um exemplo.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia13.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Caminho aberto}
+\begin{itemize}
+\item E outro.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Terminologia
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'terminologia14.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Caminho aberto}
+\begin{itemize}
+\item E outro.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'constroi1.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 1}
+\begin{itemize}
+\item O primeiro passo na construção de um DAG para um problema particular é escrever a \structure{exposição} e o \structure{desfecho} de interesse, com uma seta da exposição para o desfecho.
+\item Esta seta representa o \structure{efeito causal} que queremos estimar.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi2.png'))
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 2}
+\begin{itemize}
+\item Se existir qualquer \structure{causa comum} $C$ de $E$ e $D$, devemos colocá-lo no grafo, com setas de $C$ para $E$ e de $C$ para $D$.
+\item Devemos incluir $C$ no grafo, independentemente deste ter sido ou não mensurado em nosso estudo.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi3.png'))
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 3}
+\begin{itemize}
+\item Continuamos assim, adicionando ao diagrama qualquer variável (observada ou não observada) que é uma \structure{causa comum} de duas ou mais variáveis já existentes no diagrama.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi4.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 3}
+\begin{itemize}
+\item Continuamos assim, adicionando ao diagrama qualquer variável (observada ou não observada) que é uma \structure{causa comum} de duas ou mais variáveis já existentes no diagrama.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi5.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 3}
+\begin{itemize}
+\item Se quisermos, podemos também incluir \structure{outras variáveis}, mesmo que eles não sejam causas comuns de outras variáveis no diagrama.
+\item Por exemplo, $F$.
+\item Vamos supor que finalizamos nesse ponto. As variáveis e setas que NÃO estão em nosso grafo representam nossas \structure{suposições causais}.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi6.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Quais são as nossas suposições?}
+\begin{itemize}
+\item Por exemplo, estamos fazendo a suposição que não há uma causa comum $G$ de $A$ e $B$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi7.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Quais são as nossas suposições?}
+\begin{itemize}
+\item E que não há uma causa comum $H$ de $A$ e $D$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi8.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Quais são as nossas suposições?}
+\begin{itemize}
+\item E que $A$, $B$ e $C$ representam TODAS as causas comuns de $E$ e $D$; não há uma causa comum adicional $J$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi9.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Quais são as nossas suposições?}
+\begin{itemize}
+\item E que não há uma causa comum adicional $K$ de $D$ e $F$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## Construindo um DAG
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'constroi10.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Quais são as nossas suposições?}
+\begin{itemize}
+\item Portanto, cada seta omitida também representa uma suposição.
+\item Por exemplo, estamos assumindo que todo o efeito de $A$ em $D$ atua por meio de $C$ e $E$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: existe confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'backdoor1.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Qual o próximo passo?}
+\begin{itemize}
+\item \structure{SE} acreditarmos em nosso diagrama causal, podemos proceder para determinar se a relação $E\rightarrow D$ está \structure{confundida} ou não.
+\item Isto é feito utilizando o \structure{critério porta dos fundos}.
+\item O critério porta dos fundos é aplicado em duas partes:
+\begin{enumerate}
+\item a primeira parte define se existe ou não confundimento.
+\item se existir, a segunda parte determina se é possível controlar o confundimento.
+\end{enumerate}
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: existe confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'backdoor2.png'))
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 1}
+\begin{itemize}
+\item Primeiro removemos todas as setas \structure{saindo da exposição}.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: existe confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'backdoor3.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 2}
+\begin{itemize}
+\item Em seguida, procuramos por caminhos abertos a partir da exposição até o desfecho.
+\item Relembrando: um caminho aberto não contém um colisor.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: existe confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'backdoor4.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 2}
+\begin{itemize}
+\item Este é um caminho aberto?
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: existe confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'backdoor5.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 2}
+\begin{itemize}
+\item Este é um caminho aberto?
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: existe confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'backdoor6.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 2}
+\begin{itemize}
+\item Este é um caminho aberto?
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: existe confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'backdoor7.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Passo 2}
+\begin{itemize}
+\item Este é um caminho aberto?
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: existe confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'backdoor8.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Existe confundimento?}
+\begin{itemize}
+\item Identificamos três caminhos porta dos fundos abertos de $E$ para $D$. Assim, há confundimento.
+\item Próxima pergunta: podemos usar alguns ou todos de $A$, $B$, $C$, $F$ para controlar esse confundimento?
+\item Existe um conjunto $\mathcal{S}$ de variáveis tal que se estratificarmos (ajustarmos) por elas, podemos concluir que o efeito causal existe no estrato?
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door
+
+A segunda parte do critério da porta dos fundos nos permite determinar, com base em nosso diagrama causal, se um conjunto de covariáveis candidato é ou não suficiente para controlar o confundimento:
+
+\begin{block}{O critério back-door}
+\begin{itemize}
+\item[(i)] Primeiro, o conjunto candidato $\mathcal{S}$ não deve conter \structure{descendentes da exposição}.
+\item[(ii)] Em seguida, removemos todas as setas que saem da exposição.
+\item[(iii)] Então, nós \structure{juntamos com uma linha tracejada} quaisquer duas variáveis que compartilham um filho que esteja ela mesma em $\mathcal{S}$ ou que tenha um descendente em $\mathcal{S}$.
+\item[(iv)] Existe um caminho aberto de E para D que não passa por um membro de $\mathcal{S}$?
+\end{itemize}
+Se NÃO, então $\mathcal{S}$ é \structure{suficiente} para controlar para confundimento.
+\end{block}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle1.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{O critério back-door: passos (i) e (ii)}
+\begin{itemize}
+\item $C$ é suficiente?
+\item $C$ não é um descendente de $E$, então o passo (i) é satisfeito.
+\item Todas as setas saindo da exposição já foram removidas (passo (ii)).
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle2.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{passo (iii)}
+\begin{itemize}
+\item \structure{Conectamos} $A$ e $B$ com uma linha tracejada, pois eles compartilham um filho ($C$) que está em nosso conjunto candidato ($C$).
+\item Nenhuma outra variável precisa ser conectada desta forma.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle3.png'))
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{passo (iv)}
+\begin{itemize}
+\item Agora procuramos por caminhos abertos de $E$ para $D$ e vemos se estes todos passo por $C$.
+\item Este está OK!
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle4.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{passo (iv)}
+\begin{itemize}
+\item Este também!
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle5.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{passo (iv)}
+\begin{itemize}
+\item Este também!
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle6.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{passo (iv)}
+\begin{itemize}
+\item PORÉM, aqui está um caminho aberto de $E$ para $D$ que NÃO passa por $C$
+\item Assim, controlar apenas por $C$ NÃO é suficiente.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle7.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Qual é a solução?}
+\begin{itemize}
+\item Devemos controlar adicionalmente para $A$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle8.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Qual é a solução?}
+\begin{itemize}
+\item Ou $B$.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+## O critério back-door: podemos controlar o confundimento?
+
+\begin{columns}
+\begin{column}{.5\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'controle9.png'))
+
+```
+\end{column}
+\begin{column}{.5\linewidth}
+\begin{block}{Qual é a solução?}
+\begin{itemize}
+\item Ou ambos $A$ e $B$ para controlar para o confundimento.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+<!-- # Atividade 1 -->
+
+<!-- ## Doença coronariana e níveis de catecolaminas -->
+
+<!-- \begin{columns}[c] -->
+<!-- \column{1.7in} -->
+<!-- \begin{figure}[!h] -->
+<!-- \begin{center} -->
+<!-- \includegraphics[width=0.9\columnwidth]{StatLab2-Front} -->
+<!-- \end{center} -->
+<!-- \end{figure} -->
+<!-- \column{2.9in} -->
+<!-- {\scriptsize -->
+<!-- \begin{itemize} -->
+<!-- \item Com base em experimentos com animais, a função de emergência da medula adrenal foi estudada. -->
+<!-- \item O sistema nervoso simpático é ativado quando um indivíduo é desafiado. -->
+<!-- \item Via o hipotálamo, o estresse psicológico estimula a medula adrenal para liberar as duas catecolaminas, epinefrina (adrenalina) e norepinefrina (noradrenalina) na corrente sanguínea. -->
+<!-- \begin{itemize} -->
+<!-- \item Esta reação rápida de defesa prepara o corpo para a batalha. -->
+<!-- \end{itemize} -->
+<!-- \end{itemize} -->
+<!-- } -->
+<!-- \end{columns} -->
+<!-- \scriptsize -->
+<!-- \begin{itemize} -->
+<!-- \item No entanto, nos dias atuais o sistema simpático é desafiado por ameaças de natureza social ou mental. -->
+<!-- \begin{itemize} -->
+<!-- \item Elevação da pressão arterial e da frequência cardíaca e da liberação de ácidos graxos livres e glicose na corrente sanguínea numa rotina mentalmente estressante, mas sedentária vai ser prejudicial para o organismo, principalmente para o sistema cardiovascular. -->
+<!-- \end{itemize} -->
+<!-- \end{itemize} -->
+
+
+<!-- ## Doença coronariana e níveis de catecolaminas -->
+
+<!-- \begin{itemize}\setlength{\itemsep}{+3mm} -->
+<!-- \item Com este estudo de caso teremos a oportunidade de comparar a incidência de doença coronariana (CHD) em dois grupos de exposição (níveis alto e baixo de catecolaminas). -->
+<!-- \begin{itemize}\setlength{\itemsep}{+3mm} -->
+<!-- \item[{\bf P1:}] Esta relação é causal? -->
+<!-- \item[{\bf P2:}] Quais as suposições necessárias para o estabelecimento de uma relação causal? -->
+<!-- \item[{\bf P3:}] É necessário a análise dos dados para responder as perguntas acima? -->
+<!-- \end{itemize} -->
+<!-- \end{itemize} -->
+
+<!-- ## Dados -->
+
+<!-- \begin{itemize}\setlength{\itemsep}{+3mm} -->
+<!-- \item Os dados considerados neste estudo de caso são derivados de um estudo de coorte -- \emph{Evans County Heart Disease Study} -- realizado entre 1960 e 1969. -->
+<!-- \item Estes dados dizem respeito a uma coorte de 609 indivíduos do sexo masculino, brancos, com idades entre 40 e 76 anos, livres de \structure{doença coronariana} e residentes no distrito de Evans, Georgia, em 1960. -->
+<!-- \item Após sete anos, toda a coorte foi reexaminada e os novos casos de \structure{doença coronariana} foram identificados. -->
+<!-- \item \structure{Nível de catecolaminas} é a variável exposição de interesse. -->
+<!-- \item Todas as variáveis, com exceção de CHD, foram medidas na linha de base (1960). -->
+<!-- \end{itemize} -->
+
+<!-- ## Variáveis -->
+
+<!-- \begin{table}[!ht] -->
+<!-- \centering -->
+<!-- %\caption{Dicionário de dados} -->
+<!-- %\label{tb:DicDados} -->
+<!-- {\footnotesize -->
+<!-- \begin{tabular}{lll} -->
+<!--   \hline -->
+<!-- \structure{\emph{Nome da variável}} & \structure{\emph{Descrição da variável}} & \structure{\emph{Código da variável}} \\ -->
+<!-- 	\hline -->
+<!-- \multirow{2}{*}{CHD} & \multirow{2}{*}{Ocorrência de doença coronariana} & $0=$ não caso \\ -->
+<!--                      &                                                   & $1=$ novo caso \\ -->
+<!-- \multirow{2}{*}{CAT} & \multirow{2}{*}{Nível sérico de catecolaminas}    & $0=$ baixo \\ -->
+<!--                      &                                                   & $1=$ alto \\ -->
+<!-- \multirow{2}{*}{SMK} & \multirow{2}{*}{Tabagismo}                        & $0=$ nunca fumou \\ -->
+<!--                      &                                                   & $1=$ fumante \\ -->
+<!-- \multirow{2}{*}{ECG} & \multirow{2}{*}{Alterações do eletrocardiograma}  & $0=$ ECG normal \\ -->
+<!--                      &                                                   & $1=$ qualquer alteração \\ -->
+<!-- \multirow{2}{*}{OCC} & \multirow{2}{*}{Tipo de ocupação}                 & $0=$ não agricultor \\ -->
+<!--                      &                                                   & $1=$ agricultor \\ -->
+<!-- \multirow{2}{*}{MAR} & \multirow{2}{*}{Estado civil}                    & $0=$ não casado \\ -->
+<!--                      &                                                   & $1=$ casado \\ -->
+<!--    \hline -->
+<!-- \end{tabular} -->
+<!-- } -->
+<!-- \end{table} -->
+
+<!-- ## Variáveis -->
+
+<!-- \begin{table}[!ht] -->
+<!-- \centering -->
+<!-- %\caption{Dicionário de dados} -->
+<!-- %\label{tb:DicDados} -->
+<!-- {\footnotesize -->
+<!-- \begin{tabular}{lll} -->
+<!--   \hline -->
+<!-- \structure{\emph{Nome da variável}} & \structure{\emph{Descrição da variável}} & \structure{\emph{Código da variável}} \\ -->
+<!-- 	\hline -->
+<!-- {AGE} & {Idade}                        & Anos \\ -->
+<!-- {CHL} & {Colesterol}                   & mg/100 mL \\ -->
+<!-- {SBP} & {Pressão arterial sistólica}   & mmHg \\ -->
+<!-- {DBP} & {Pressão arterial diastólica}  & mmHg \\ -->
+<!-- {QTI} & {Índice de Quételet}           & $100\times[{\rm peso\ (lb)}/{\rm altura\ (in.)}^2]$ \\ -->
+<!-- {HEM} & {Hematócrito}                  & Percentual \\ -->
+<!-- {SES} & {\emph{Status} socioeconômico} & Índice de McGuire-White \\ -->
+<!-- {PLS} & {Pulsação}                     & Batidas/minuto \\ -->
+<!-- \hline -->
+<!-- \end{tabular} -->
+<!-- } -->
+<!-- \end{table} -->
+
+
+<!-- ## Dados (amostra grátis) -->
+
+<!-- ```{r, echo=FALSE, warning=FALSE, message=FALSE} -->
+<!-- evans <- read.table(file = here("data", "evans.txt"), -->
+<!--                     header = TRUE) -->
+<!-- knitr::kable(head(evans)) -->
+<!-- ``` -->
+
+<!-- ## Conhecimento a priori -->
+
+<!-- \begin{columns}[c] -->
+<!-- \column{1.7in} -->
+<!-- \begin{figure}[!h] -->
+<!-- \begin{center} -->
+<!-- \includegraphics[width=0.9\columnwidth]{StatLab2-background} -->
+<!-- \end{center} -->
+<!-- \end{figure} -->
+<!-- \column{2.9in} -->
+<!-- {\small -->
+<!-- \begin{itemize}\setlength{\itemsep}{+2mm} -->
+<!-- \item[{\bf P:}] Faça uma discussão a respeito dos fatores psicossociais associados a liberação de catecolaminas. Quais os efeitos cardiovasculares são esperados destas catecolaminas? -->
+<!-- \end{itemize} -->
+<!-- } -->
+<!-- \end{columns} -->
+
+<!-- ## Prática -->
+
+<!-- \begin{itemize}\setlength{\itemsep}{+3mm} -->
+<!-- \item Construa o \structure{diagrama causal} (DAG) para avaliar o efeito da exposição na resposta de interesse. -->
+<!-- \begin{columns}[c] -->
+<!-- \column{1in} -->
+<!-- \includegraphics[width=0.9\columnwidth]{Porta_dos_Fundos} -->
+<!-- \column{3.6in} -->
+<!-- \begin{itemize}\setlength{\itemsep}{+3mm} -->
+<!-- \item Utilizando o critério \emph{back-door} \structure{(apresente os passos utilizados)} responda: -->
+<!-- \begin{enumerate}\setlength{\itemsep}{+3mm} -->
+<!-- \item Existe confundimento? O que isso implica em termos de suposições de identificação do efeito causal? -->
+<!-- \item Se existe confundimento, é possível controlar este confundimento? -->
+<!-- \item Ainda, se existe confundimento, quais são as variáveis do conjunto suficiente para controle/ajuste? -->
+<!-- \end{enumerate} -->
+<!-- \end{itemize} -->
+<!-- \end{columns} -->
+<!-- \end{itemize} -->
+
+<!-- ## Próximo encontro -->
+
+<!-- - Discussão do artigo __From bad to worse: collider stratification amplifies confounding -->
+<!-- bias in the "obesity paradox"__. -->
+<!-- - Comparação do critério back-door com os critérios tradicionais de confundimento. -->
+<!-- - Ferramentas computacionais para a construção de DAGs. -->
+
+# Avisos
+
+## Avisos
+
+- __Próxima semana (06/11):__ 
+    1. Catecolaminas: diagramas causais na pesquisa empírica (__Atividade de avaliação__).
+    2. Ferramentas computacionais na construção de diagramas causais.
+- __Para casa:__ Ler o artigo __"Causal diagrams for epidemiologic research"__ de Sander Greenland, Judea Pearl e James Robins.
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'cause-effect.png'))
+
+```
+

@@ -1,0 +1,212 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Entre estudos observacionais e experimentos"
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+---
+
+# Relembrando
+
+## Relembrando {.allowframebreaks}
+
+- Um estudo aleatorizado com base em uma covariável.
+    + $\pi_i = \Pr(Z_i = 1)$ é diferente para cada indivíduo; $\pi_i$ depende do estrato (de uma característica) do indivíduo.
+
+\framebreak
+
+```{r, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+# Sexo
+sexo <- c(rep(0, 200000), rep(1, 200000))
+sexo <- factor(sexo, labels = c("Mulheres", "Homens"))
+# Idade
+idade <- c(rep(c(0, 1), each = 100000),
+           rep(c(0, 1), each = 100000))
+idade <- factor(idade, labels = c("Jovens", "Idosos"))
+# Estrato
+df <- data.frame(sexo, idade)
+df$estrato <- ifelse(df$sexo == "Homens" & 
+                       df$idade == "Idosos", 1,
+                     ifelse(df$sexo == "Mulheres" & 
+                              df$idade == "Idosos", 2,
+                            ifelse(df$sexo == "Homens" &
+                                     df$idade == "Jovens", 3, 4)))
+```
+
+\framebreak
+
+```{r, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+# Desfecho
+df$desfecho <- 0
+df$desfecho[df$estrato == 1][1:40000] <- 1
+df$desfecho[df$estrato == 2][1:30000] <- 1
+df$desfecho[df$estrato == 3][1:20000] <- 1
+df$desfecho[df$estrato == 4][1:10000] <- 1
+df$desfecho <- factor(df$desfecho, labels = c("Vivo", "Morto"))
+# Grupo de tratamento
+df$grupo <- ifelse(df$idade == "Idosos",
+                   rbinom(n = 100000, size = 1, prob = 0.8),
+                   rbinom(n = 100000, size = 1, prob = 0.2))
+df$grupo <- factor(df$grupo, labels = c("Controle", "Tratado"))
+df$desfecho <- relevel(df$desfecho, ref = "Morto")
+df$estrato <- factor(df$estrato, labels = paste("Estrato", 1:4))
+df$grupo <- relevel(df$grupo, ref = "Tratado")
+```
+
+\framebreak
+
+```{r, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+# Tabela 5.1
+tab_5.1 <- table(df$grupo, df$desfecho, df$estrato,
+                 dnn = c("Grupo", "Desfecho", "Estrato"))
+tab_5.1
+```
+
+\framebreak
+
+```{r, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+tab.df <- as.data.frame(matrix(
+  ftable(
+    addmargins(tab_5.1, margin = 2),
+    row.vars = c(3, 1)),
+  ncol = 3, byrow = F))
+names(tab.df) <- c("Morto", "Vivo", "Total")
+tab.df$Taxa.Mortalidade <- round(
+  100 * tab.df$Morto/tab.df$Total, 1)
+
+kable(tab.df, "latex", col.names = c("Morto", "Vivo", "Total", "Taxa de Mortalidade"))
+```
+
+\framebreak
+
+```{r, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+tab.df <- as.data.frame(matrix(
+  ftable(
+    addmargins(tab_5.1, margin = 2),
+    row.vars = c(3, 1)),
+  ncol = 3, byrow = F))
+names(tab.df) <- c("Morto", "Vivo", "Total")
+tab.df$Taxa.Mortalidade <- round(
+  100 * tab.df$Morto/tab.df$Total, 1)
+
+kable(tab.df, "latex",
+      col.names = c("Morto", "Vivo", "Total", "Taxa de Mortalidade (%)"),
+      booktabs = T, format.args = list(big.mark = ".", decimal.mark = ",")) %>% 
+  kable_styling(latex_options = c("striped", "hold_position"),
+                stripe_color = "#4C4CFF")
+```
+
+\framebreak
+
+- Paradoxo de Simpson.
+- O ajuste direto.
+- Testando a hipótese nula de Fisher de nunhum efeito de tratamento (o teste de Mantel-Haenszel).
+- $\pi_i$ importa?
+    + Sim e não!
+
+# Combinando estratos com mesmo $\pi_i$
+
+# Pares combinados
+
+# O escore de propensão 
+
+# Quando é suficiente ajustar para as covariáveis observadas?
+
+## Um experimento com um dos problemas de um estudo observacional
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'table_5_1.png'))
+
+```
+
+## Um experimento com um dos problemas de um estudo observacional
+
+- Do que trata o experimento?
+- O que sabemos sobre o efeito causal?
+
+- Como os indivíduos foram alocados aos grupos de tratamento?
+- Qual a relação, ou qual a diferença deste estudo para um experimento completamente aleatorizado?
+- Qual o papel das covariáveis aqui?
+- O que é um estrato?
+
+- Quais  as conclusões que chegamos (para cada estrato)?
+
+## Um experimento com um dos problemas de um estudo observacional
+
+__O problema!__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'table_5_2.png'))
+
+```
+
+- A qual conclusão chegamos?
+
+## O Paradoxo de Simpson
+
+- Como podemos caracterizar o paradoxo de Simpson?
+- Há algum paradoxo de fato?
+- Qual o __lembrete__ irritante (importante) de Simpson?
+
+## Ajuste direto: um método para estimar os efeitos médios do tratamento
+
+- Estimativa ajustada:
+
+$$
+(39,9 - 40,3) / 4 + (30,1 - 29,8) / 4 + (19,9 - 20,0) / 4 + (10,2 - 9,9) / 4 = 0,025.
+$$
+
+- O que entendemos por ajuste direto?
+- Qual a relação desta abordagem com respeito à estimativa de $\bar{\delta}$ em um experimento completamente aleatorizado?
+
+## Um único teste de hipóteses combinando resultados estrato-específicos
+
+- Neste estudo, é possível testar a hipótese nula de Fisher de nenhum efeito de tratamento?
+
+- Se sim, de que forma isto é feito?
+
+- Se sim, qual a diferença de realizar tal teste e um teste exato de Fisher na Tabela 5.2?
+
+## É importante conhecer as probabilidades de atribuição de tratamento?
+
+- É importante conhecer as probabilidades de atribuição de tratamento?
+- Qual o atributo importante deste experimento para que possamos concluir adequadamente?
+
+## O que aprendemos com esse experimento aleatorizado peculiar?
+
+- Como nos referimos a este tipo de estudo?
+- O que buscaremos, em termos de delineamento/métodos, em estudos observacionais para concluirmos a respeito de associações causais?
+- Qual a crítica central em um estudo observacional?
+
+# Avisos
+
+## Avisos
+
+- __Próxima semana (09/10):__ Tabagismo e câncer de pulmão.
+- __Para casa:__ Ler o Capítulo 5 do livro "The Book of Why" do Judea Pearl.
+- __Atividade de avaliação (09/10):__ a condução da discussão deste capítulo será realizada pelos estudantes da turma.
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'why-what.jpg'))
+
+```
+
