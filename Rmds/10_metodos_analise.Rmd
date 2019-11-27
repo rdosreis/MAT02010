@@ -1,0 +1,190 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Métodos de análise"
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+---
+
+## Relembrando
+
+- A __intercambiabilidade condicional__ é o principal critério que nos permite fazer declarações causais usando __dados observacionais__.
+- Assim, precisamos identificar, se possível, um conjunto de (co)variáveis $X_1, X_2, \ldots$ , de tal forma que a intercambiabilidade condicional é válida, dado este conjunto de variáveis.
+- Na vida real, pode haver muitas variáveis candidatas $X$.
+- Estes podem ser __causalmente inter-relacionados__ de uma maneira __muito complexa__.
+- Decidir se os indivíduos expostos e o não expostos são  condicionalmente intercambiáveis, dado $X_1, X_2, \ldots$, __requer conhecimento detalhado do assunto__.
+- Os __diagramas causais__ podem nos ajudar a usar esse conhecimento para determinar se a intercambiabilidade condicional é válida ou não.
+
+## Métodos de estimação
+
+- Suponha que, aplicando o critério \emph{back-door}, nosso diagrama causal nos diga que o conjunto $X = \{X_1, X_2, \ldots, X_p\}$ \structure{(sexo, idade, gravidade da dor, uso de álcool, ...)} é suficiente para controlar para confusão.
+- \structure{Como} analisamos os dados para estimarmos o efeito causal médio da exposição (ou tratamento, o $\bar{\delta}$)?
+    + Estratificação.
+    + Ajuste por covariável na análise de regressão.
+    + Escore de propensão.
+    + Pareamento.
+    + Ponderação.
+
+## Métodos de estimação: estratificação {.allowframebreaks}
+
+- Se o número de covariáveis de ajuste é pequeno e estes são categóricos/dicotômicos, podemos criar \structure{estratos} com base nestas covariáveis.
+- Em seguida, calculamos o efeito de interesse em cada estrato e então \structure{combinamos} os resultados (ajuste direto e Mantel-Haenszel).
+
+\framebreak
+
+\begin{eqnarray*}
+\bar{\delta} &=& \bar{r}_T - \bar{r}_C \\
+&=& \E[r_{T_i}] - \E[r_{C_i}] \\
+&=& \E[\E[r_{T_i}|X_i]] - \E[\E[r_{C_i}|X_i]] \\
+&=& \E[\E[r_{T_i}|Z_i = 1, X_i]] - \E[\E[r_{C_i}|Z_i = 0, X_i]] \\
+&=& \E[\E[R_i|Z_i = 1, X_i]] - \E[\E[R_i|Z_i = 0, X_i]] \\
+&=& \E[\E[R_i|Z_i = 1, X_i] - \E[R_i|Z_i = 0, X_i]] \\
+&=& \sum_x{(\E[R_i|Z_i = 1, X_i = x] - \E[R_i|Z_i = 0, X_i = x])\Pr(X_i = x)}.
+\end{eqnarray*}
+
+## Métodos de estimação: estratificação
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'table_5_6.png'))
+
+```
+
+## Métodos de estimação: regressão
+
+- Se o nosso conjunto suficiente para controle de confusão contém muitos confundidores (e possivelmente contínuos), teremos muitos e pequenos estratos, perdendo precisão nas estimativas.
+- Uma alternativa natural é ajustar para $X$ em um \structure{modelo de regressão}.
+    + Desenhe o DAG
+    + Identifique o conjunto suficiente de confundidores $X$
+    + Inclua estes confundidores __apropriadamente__ em um modelo de regressão
+        - É importante avaliar relações não-lineares, termos de interação, suposições distribucionais, etc.
+
+## Métodos de estimação: regressão {.allowframebreaks}
+
+- Considere o caso em que $R$, a variável resposta/desfecho, seja contínua.
+- O modelo de regressão linear supõe:
+$$
+\E[R|Z = z, X_1, \ldots, X_p] = \beta_0 + \beta_Zz + \beta_1x_1 + \ldots + \beta_pX_p.
+$$
+
+- Assim,
+
+\begin{eqnarray*}
+\hat{\delta} &=& \frac{1}{n}\sum_{i=1}^n{\left\{ \hat{\E}[R_i|Z_i = 1, x_1, \ldots, x_p] - \hat{\E}[R_i|Z_i = 0, x_1, \ldots, x_p]\right\}}\\
+& = & \frac{1}{n}\sum_{i=1}^n{\left\{(\hat{\beta}_0 + \hat{\beta}_Z + \sum_{k=1}^p{\hat{\beta}_kx_{ik}}) - (\hat{\beta}_0 + \sum_{k=1}^p{\hat{\beta}_kx_{ik}})\right\}}\\
+& = & \frac{1}{n}\sum_{i=1}^n{\left\{\hat{\beta}_Z\right\}} = \frac{1}{n} \times n\hat{\beta}_Z = \hat{\beta}_Z.
+\end{eqnarray*}
+
+\framebreak
+
+Se
+
+1. o conjunto suficiente de confundidores $Z$ foi corretamente selecionado a partir do DAG corretamente especificado;
+2. o modelo de regressão foi corretamente especificado;
+
+então pode ser dada uma interpretação causal a $\hat{\beta}_Z$.
+
+- __Intervalos de confiança__ e __testes de hipóteses__ podem ser cosntruídos a partir das propriedades de $\hat{\beta}_Z$.
+
+\framebreak
+
+- Agora, suponha que $R$, a variável resposta/desfecho, seja dicotômica.
+- O modelo de regressão logísitica (uma possibilidade de modelo para uma variável resposta dicotômica) supõe:
+
+\begin{eqnarray*}
+\E[R|Z=z,X_1,\ldots,X_p] &=& \Pr[R=1|Z=z,X_1,\ldots,X_p]\\
+&=& \frac{\exp\{\beta_0 + \beta_Zz + \sum_{k=1}^p{\beta_kx_{k}}\}}{1 + \exp\{\beta_0 + \beta_Zz + \sum_{k=1}^p{\beta_kx_{k}}\}}.
+\end{eqnarray*}
+
+\framebreak
+
+- Assim,
+
+\footnotesize
+\begin{eqnarray*}
+\hat{\delta} &=& \frac{1}{n}\sum_{i=1}^n{\left\{\hat{\E}[R_i|Z_i = 1, x_1, \ldots, x_p] - \hat{\E}[R_i|Z_i = 0, x_1, \ldots, x_p]\right\}}\\
+&=& \frac{1}{n}\sum_{i=1}^n{\left\{\hat{\Pr}[R=1|Z=1,X_1,\ldots,X_p] - \hat{\Pr}[R=1|Z=0,X_1,\ldots,X_p]\right\}}\\
+&=& \frac{1}{n}\sum_{i=1}^n{\left\{\frac{\exp\{\hat{\beta}_0 + \hat{\beta}_Z + \sum_{k=1}^p{\hat{\beta}_kx_{k}}\}}{1 + \exp\{\hat{\beta}_0 + \hat{\beta}_Z + \sum_{k=1}^p{\hat{\beta}_kx_{k}}\}} - \frac{\exp\{\hat{\beta}_0 + \sum_{k=1}^p{\hat{\beta}_kx_{k}}\}}{1 + \exp\{\hat{\beta}_0 + \sum_{k=1}^p{\hat{\beta}_kx_{k}}\}}\right\}}.
+\end{eqnarray*}
+
+\normalsize
+
+\framebreak
+
+- \structure{Observação:} fora do modelo linear, $\hat{\beta}_Z$ não é a estimativa do $\delta$.
+\item Métodos de reamostragem (por exemplo, o \structure{\emph{bootstrap}}) podem ser utilizados na construção de intervalos de confiança e testes de hipóteses para o $\delta$.
+
+## Métodos de estimação: o escore de propensão {.allowframebreaks}
+
+- No caso em que o conjunto suficiente possui muitos confundidores, o ajuste destes confundidores na análise de regressão pode implicar na falta de precisão das estimativas.
+- Uma alternativa é ajustar por uma função (resumo) dos confundidores, por exemplo, o \structure{escore de propensão}.
+- O escore de propensão $p(X)$ é a probabilidade condicional de $Z=1$ dado $X=(X_1,\ldots,X_p)$
+
+$$
+p(X) = \Pr(Z=1|X).
+$$
+
+\framebreak
+
+- $p(X)$ é um escalar, independentemente da dimensão de $X$.
+- $p(X)$ pode ser estimado por regressão logística.
+    + Abordagens mais modernas têm utilizado métodos de \structure{aprendizagem de máquina} para estimar $p(X)$.
+- \structure{Intuição:} Se dois indivíduos, um exposto e outro não-exposto, têm o mesmo valor do escore de propensão, $0,25$, por exemplo, são igualmente propensas a serem expostas (receberem o tratamento).
+- \structure{Resultado teórico:} intercambiabilidade condicional dado $p(X)$.
+
+\framebreak
+
+- Existem diferentes maneiras de incorporar o escore de propensão na análise para a estimação do efeito causal de interesse:
+    1. estratificação (faixas do escore de propensão como estratos)
+    2. ajuste na regressão (no lugar dos confundidores, se utiliza apenas o escore de propensão)
+    3. pareamento (esocore de propensão como uma medida de distância entre indivíduos)
+    4. ponderação (o inverso do escore de propensão como uma ponderação).
+- Estes métodos são válidos somente se os confundidores corretos $X$ são incluídos no conjunto de ajuste e se $p(X)$ é modelado corretamente.
+
+## Métodos de estimação: pareamento {.allowframebreaks}
+
+- \structure{Métodos de pareamento:} controlam os confundidores por uma etapa pré-análise.
+    + Encontram pares de indivíduos (um exposto e um não-exposto) \structure{similares} com respeito aos confundidores.
+    + Métricas (distâncias) são utilizadas para estabelecer a similaridade entre indivíduos.
+    + O escore de propensão pode ser utilizado como medida de similaridade, assim como a distância Euclidiana, ou a distância de Mahalanobis.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'pareamento.png'))
+
+```
+
+## Comentários finais
+
+- Neste curso apresentamos os conceitos básicos da abordagem de desfechos potenciais para inferência causal.
+    + Definição dos efeitos causais.
+    + Identificação dos efeitos causais.
+    + Estimação dos efeitos causais.
+- O que vem depois?
+    + Análise de sensibilidade.
+    + Análise de mediação: decomposição do efeito total em efeitos direto e indireto.
+    + Análise de interação: modificação do efeito.
+    + Confundidores intermediários.
+    + Confundidores tempo-dependentes.
+
+# Avisos
+
+## Avisos
+
+- __Próxima semana (04/12):__ \structure{SEMINÁRIOS!}
+- __Para casa:__ Ler artigos de referência dos seminários que serão apresentados.
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'TodaysRandomMedical.jpg'))
+
+```
+

@@ -1,0 +1,408 @@
+---
+title: "MAT02010 - Tópicos Avançados em Estatística II"
+subtitle: "Diagaramas causais: uma introdução"
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2019
+---
+
+# Atividade 1
+
+## Doença coronariana e níveis de catecolaminas
+
+\begin{columns}[c]
+\column{1.7in}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{StatLab2-Front}
+\end{center}
+\end{figure}
+\column{2.9in}
+{\scriptsize
+\begin{itemize}
+\item Com base em experimentos com animais, a função de emergência da medula adrenal foi estudada.
+\item O sistema nervoso simpático é ativado quando um indivíduo é desafiado.
+\item Via o hipotálamo, o estresse psicológico estimula a medula adrenal para liberar as duas catecolaminas, epinefrina (adrenalina) e norepinefrina (noradrenalina) na corrente sanguínea.
+\begin{itemize}
+\item Esta reação rápida de defesa prepara o corpo para a batalha.
+\end{itemize}
+\end{itemize}
+}
+\end{columns}
+\scriptsize
+\begin{itemize}
+\item No entanto, nos dias atuais o sistema simpático é desafiado por ameaças de natureza social ou mental.
+\begin{itemize}
+\item Elevação da pressão arterial e da frequência cardíaca e da liberação de ácidos graxos livres e glicose na corrente sanguínea numa rotina mentalmente estressante, mas sedentária vai ser prejudicial para o organismo, principalmente para o sistema cardiovascular.
+\end{itemize}
+\end{itemize}
+
+
+## Doença coronariana e níveis de catecolaminas
+
+\begin{itemize}\setlength{\itemsep}{+3mm}
+\item Com este estudo de caso teremos a oportunidade de comparar a incidência de doença coronariana (CHD) em dois grupos de exposição (níveis alto e baixo de catecolaminas).
+\begin{itemize}\setlength{\itemsep}{+3mm}
+\item[{\bf P1:}] Esta relação é causal?
+\item[{\bf P2:}] Quais as suposições necessárias para o estabelecimento de uma relação causal?
+\item[{\bf P3:}] É necessário a análise dos dados para responder as perguntas acima?
+\end{itemize}
+\end{itemize}
+
+## Dados
+
+\begin{itemize}\setlength{\itemsep}{+3mm}
+\item Os dados considerados neste estudo de caso são derivados de um estudo de coorte -- \emph{Evans County Heart Disease Study} -- realizado entre 1960 e 1969.
+\item Estes dados dizem respeito a uma coorte de 609 indivíduos do sexo masculino, brancos, com idades entre 40 e 76 anos, livres de \structure{doença coronariana} e residentes no distrito de Evans, Georgia, em 1960.
+\item Após sete anos, toda a coorte foi reexaminada e os novos casos de \structure{doença coronariana} foram identificados.
+\item \structure{Nível de catecolaminas} é a variável exposição de interesse.
+\item Todas as variáveis, com exceção de CHD, foram medidas na linha de base (1960).
+\end{itemize}
+
+## Variáveis
+
+\begin{table}[!ht]
+\centering
+%\caption{Dicionário de dados}
+%\label{tb:DicDados}
+{\footnotesize
+\begin{tabular}{lll}
+  \hline
+\structure{\emph{Nome da variável}} & \structure{\emph{Descrição da variável}} & \structure{\emph{Código da variável}} \\
+	\hline
+\multirow{2}{*}{CHD} & \multirow{2}{*}{Ocorrência de doença coronariana} & $0=$ não caso \\
+                     &                                                   & $1=$ novo caso \\
+\multirow{2}{*}{CAT} & \multirow{2}{*}{Nível sérico de catecolaminas}    & $0=$ baixo \\
+                     &                                                   & $1=$ alto \\
+\multirow{2}{*}{SMK} & \multirow{2}{*}{Tabagismo}                        & $0=$ nunca fumou \\
+                     &                                                   & $1=$ fumante \\
+\multirow{2}{*}{ECG} & \multirow{2}{*}{Alterações do eletrocardiograma}  & $0=$ ECG normal \\
+                     &                                                   & $1=$ qualquer alteração \\
+\multirow{2}{*}{OCC} & \multirow{2}{*}{Tipo de ocupação}                 & $0=$ não agricultor \\
+                     &                                                   & $1=$ agricultor \\
+\multirow{2}{*}{MAR} & \multirow{2}{*}{Estado civil}                    & $0=$ não casado \\
+                     &                                                   & $1=$ casado \\
+   \hline
+\end{tabular}
+}
+\end{table}
+
+## Variáveis
+
+\begin{table}[!ht]
+\centering
+%\caption{Dicionário de dados}
+%\label{tb:DicDados}
+{\footnotesize
+\begin{tabular}{lll}
+  \hline
+\structure{\emph{Nome da variável}} & \structure{\emph{Descrição da variável}} & \structure{\emph{Código da variável}} \\
+	\hline
+{AGE} & {Idade}                        & Anos \\
+{CHL} & {Colesterol}                   & mg/100 mL \\
+{SBP} & {Pressão arterial sistólica}   & mmHg \\
+{DBP} & {Pressão arterial diastólica}  & mmHg \\
+{QTI} & {Índice de Quételet}           & $100\times[{\rm peso\ (lb)}/{\rm altura\ (in.)}^2]$ \\
+{HEM} & {Hematócrito}                  & Percentual \\
+{SES} & {\emph{Status} socioeconômico} & Índice de McGuire-White \\
+{PLS} & {Pulsação}                     & Batidas/minuto \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+
+## Dados (amostra grátis)
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+evans <- read.table(file = here("data", "evans.txt"),
+                    header = TRUE)
+knitr::kable(head(evans))
+```
+
+## Conhecimento a priori
+
+\begin{columns}[c]
+\column{1.7in}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{StatLab2-background}
+\end{center}
+\end{figure}
+\column{2.9in}
+{\small
+\begin{itemize}\setlength{\itemsep}{+2mm}
+\item[{\bf P:}] Faça uma discussão a respeito dos fatores psicossociais associados a liberação de catecolaminas. Quais os efeitos cardiovasculares são esperados destas catecolaminas?
+\end{itemize}
+}
+\end{columns}
+
+## Prática
+
+\begin{itemize}\setlength{\itemsep}{+3mm}
+\item Construa o \structure{diagrama causal} (DAG) para avaliar o efeito da exposição na resposta de interesse.
+\begin{columns}[c]
+\column{1in}
+\includegraphics[width=0.9\columnwidth]{Porta_dos_Fundos}
+\column{3.6in}
+\begin{itemize}\setlength{\itemsep}{+3mm}
+\item Utilizando o critério \emph{back-door} \structure{(apresente os passos utilizados)} responda:
+\begin{enumerate}\setlength{\itemsep}{+3mm}
+\item Existe confundimento? O que isso implica em termos de suposições de identificação do efeito causal?
+\item Se existe confundimento, é possível controlar este confundimento?
+\item Ainda, se existe confundimento, quais são as variáveis do conjunto suficiente para controle/ajuste?
+\end{enumerate}
+\end{itemize}
+\end{columns}
+\end{itemize}
+
+# Relembrando
+
+## Como duas variáveis podem estar associadas?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'associa7.png'))
+```
+
+- $X$ e $Y$ serão __associadas na população__ se:
+    + $X$ causa $Y$.
+    + $Y$ causa $X$.
+    + existe uma $Z$ que é causa comum de $X$ e $Y$.
+- $X$ e $Y$ serão __associadas em subpopulações definadas por $Z$__ se $Z$ é um __efeito__ de $X$ e $Y$.
+
+## Como duas variáveis podem estar associadas?
+
+- O que podemos concluir do diagrama abaixo?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'exemplo-odag02.png'))
+```
+
+## Como duas variáveis podem estar associadas?
+
+- E neste outro caso? O que podemos concluir?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'exemplo-odag02-2.png'))
+```
+
+## Grafos acíclicos dirigidos
+
+- Os __grafos acíclicos dirigidos__ (DAGs), ou __diagramas causais__, oferecem uma linguagem para especificação de relações (causais) entre as variáveis do quadro conceitual.
+- __Critério back-door__: (1) verifica a existência de __viés de confusão__; (2) em caso afirmativo, verifica a existência de um conjunto de variáveis __suficiente para o controle__ (ajuste) do viés de confusão.
+
+# Ferramentas computacionais para a construção de DAGs
+
+## Um exemplo
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'exemplo-odag02-3.png'))
+```
+
+- A análise de DAGs pode ser tediosa na prática, e se presta bem à automatização por um programa de computador.
+
+## DAGitty
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'dagitty-odag02-1.png'))
+```
+
+## DAGitty
+
+- O DAGitty é um ambiente baseado em navegador para criar, editar e analisar modelos causais (DAGs).
+    + O foco está no uso de diagramas causais para minimizar o viés em estudos empíricos em epidemiologia e outras disciplinas.
+
+\begin{columns}
+\begin{column}{.25\linewidth}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'dagitty-odag02-2.jpg'))
+```
+\end{column}
+\begin{column}{.75\linewidth}
+\begin{itemize}
+\item O DAGitty é desenvolvido e mantido por \structure{Johannes Textor} (Tumor Immmunology Lab and Institute for Computing and Information Sciences, Radboud University Nijmegen).
+\item \url{http://dagitty.net/}
+\end{itemize}
+\end{column}
+\end{columns}
+
+## DAGitty
+
+### Uma visão geral
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'dagitty1.png'))
+```
+
+## DAGitty
+
+### Uma visão geral
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'dagitty2.png'))
+```
+
+## DAGitty
+
+### Uma visão geral
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'dagitty3.png'))
+```
+
+## DAGitty
+
+### Uma visão geral
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE}
+knitr::include_graphics(here('images', 'dagitty4.png'))
+```
+
+## Criando um DAG no DAGitty
+
+- No menu __Model__, clique em __New model__.
+- O DAGitty irá solicitar o nome da variável de __exposição__, e logo em seguida o nome da variável de __desfecho__.
+    + Estas variáveis serão criadas no grafo com o caminho $E \rightarrow D$.
+- Para acrescentar uma nova variável dê um __duplo-clique__ na área do grafo e dê um nome para esta variável.
+- Para especificar uma relação entre duas variáveis, dê um duplo-clique na __variável de origem__ e um duplo-clique na __variável de destino__.
+    + O mesmo procedimento serve para remover uma relação entre duas variáveis já existente.
+- Para remover uma variável do grafo, clique sobre a variável pressionando a __tecla D__.
+- Para renomear uma variável, clique sobre a variável pressionando a __tecla R__.
+- Na dúvida, consulte os menus __How to ...__ e __Help__.
+
+## Criando um DAG no DAGitty
+
+- No menu __Model__ é possível:
+    + exportar o grafo
+    + publicar o grafo
+- Uma vez publicado, o grafo pode ser:
+    + modificado
+    + apagado
+    
+# Atividade 2
+
+## Atividade 2
+
+- Utilize o DAGitty para construir o DAG do __"exemplo das Catecolaminas"__.
+- Verifique se as conclusões obtidas concordam com as que você obteve com o critério back-door "feito a mão".
+
+## DAGitty encontra o `R`
+
+```{r, warning=FALSE, message=FALSE}
+# Instala o pacote dagitty
+# install.packages("dagitty")
+
+# Carrega o pacote dagitty
+library(dagitty)
+
+# Carrega o DAG a partir do DAGitty
+dag1 <- downloadGraph(x = "dagitty.net/mBYpOXW")
+```
+
+## DAGitty encontra o `R`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+plot(dag1)
+```
+
+## DAGitty encontra o `R`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+dag1.bd <- backDoorGraph(dag1)
+plot(dag1.bd)
+```
+
+## DAGitty encontra o `R`
+
+```{r, warning=FALSE, message=FALSE}
+print(adjustmentSets(dag1,
+                     effect = "total"))
+
+# impliedConditionalIndependencies(dag1,
+#                                  max.results = 2)
+```
+
+## `ggdag`: `dagitty` encontra o `ggplot2`
+
+```{r, warning=FALSE, message=FALSE}
+# Instala o pacote ggdag
+# install.packages("ggdag")
+
+# Carrega o pacote ggdag
+library(ggdag)
+
+# Carrega o DAG a partir do DAGitty
+dag2 <- downloadGraph(x = "dagitty.net/mQLajCg")
+```
+
+## `ggdag`: `dagitty` encontra o `ggplot2`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+ggdag(dag2)
+```
+
+## `ggdag`: `dagitty` encontra o `ggplot2`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+ggdag_paths(dag2)
+```
+
+## `ggdag`: `dagitty` encontra o `ggplot2`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+ggdag_parents(dag2, "D")
+```
+
+## `ggdag`: `dagitty` encontra o `ggplot2`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+ggdag_ancestors(dag2, "D")
+```
+
+## `ggdag`: `dagitty` encontra o `ggplot2`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+ggdag_ancestors(dag2, "C1")
+```
+
+## `ggdag`: `dagitty` encontra o `ggplot2`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+ggdag_children(dag2, "C1")
+```
+
+## `ggdag`: `dagitty` encontra o `ggplot2`
+
+```{r, warning=FALSE, message=FALSE, out.width="70%", fig.align='center'}
+ggdag_adjustment_set(dag2)
+
+```
+
+# Atividade 3
+
+## DAGitty + ggdag
+
+- Pense em uma __questão causal__ que você tem interesse em estudar.
+- Utilize um ou mais recursos computacionais para construir um DAG (diagrama causal) do modelo causal relacionado à sua questão de pesquisa.
+
+# Avisos
+
+## Avisos
+
+- __Próxima semana (13/11):__ __métodos de pareamento__/__escores de propensão__ para estimação de efeitos causais.
+- __Para casa:__ Ler artigos de Miguel Hernán.
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+
+knitr::include_graphics(here('images', 'cause-effect.png'))
+
+```
+
