@@ -32,7 +32,18 @@
 \setbeamertemplate{enumerate items}[default]
 \setbeamertemplate{footline}{}
 \setbeamercolor{alerted text}{fg=purple}
-\titlegraphic{\hfill\includegraphics[height=1cm]{logos/Logo-40-anos-estatistica.png}}
+%\titlegraphic{\hfill\includegraphics[height=1cm]{logos/Logo-40-anos-estatistica.png}}
+\titlegraphic{\begin{columns}
+\begin{column}{0.5\textwidth}
+    \begin{flushleft}%
+    \includegraphics[height=1cm]{logos/Logo-40-anos-estatistica.png}%
+    \end{flushleft}
+\end{column}
+\begin{column}{0.5\textwidth}
+    \begin{flushright}%
+		\includegraphics[height=1cm]{logos/ppgepi_logo.png}
+    \end{flushright}
+\end{column}\end{columns}}
 
 \def\Corr{\mbox{Corr}\,}
 \def\Cov{\mbox{Cov}\,}
@@ -43,3 +54,27 @@
 \definecolor{darkpastelpurple}{rgb}{0.59, 0.44, 0.84}
 \definecolor{darkpastelred}{rgb}{0.76, 0.23, 0.13}
 
+%\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+%\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\makeatletter
+% Taken from http://ctan.org/pkg/centernot
+\newcommand*{\centernot}{%
+  \mathpalette\@centernot
+}
+\def\@centernot#1#2{%
+  \mathrel{%
+    \rlap{%
+      \settowidth\dimen@{$\m@th#1{#2}$}%
+      \kern.5\dimen@
+      \settowidth\dimen@{$\m@th#1=$}%
+      \kern-.5\dimen@
+      $\m@th#1\not$%
+    }%
+    {#2}%
+  }%
+}
+\makeatother
+
+\newcommand{\independent}{\perp\mkern-9.5mu\perp}
+\newcommand{\notindependent}{\centernot{\independent}}
