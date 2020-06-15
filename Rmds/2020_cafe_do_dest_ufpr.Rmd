@@ -80,6 +80,11 @@ O roteiro da inferência causal consiste em (pelo menos) três etapas:
 - Emma tomou aspirina ($Z = 1$) e a sua dor de cabeça passou ($R = 1$).
 - A aspirina __causou__ o desaparecimento da sua dor de cabeça?
 
+>- Esta é uma questão causal! Assim como:
+>    + O tabaco __causou__ a presença de câncer de pulmão?
+>    + As políticas de restrição a propaganda de cigarro __causaram__ a diminuição das taxas de câncer de pulmão?
+>    + O diploma de ensino superior __causou__ a promoção no emprego?
+
 ## Estrutura
 
 A estrutura da inferência causal:
@@ -108,7 +113,7 @@ A estrutura da inferência causal:
 
 1. Consideramos apenas dois níveis de tratamento por uma questão de simplicidade. Esta ideia pode ser generalizada para múltiplos níveis de tratamento e para outros regimes de tratamento mais gerais.
 2. Em um __experimento aleatorizado__ $\pi_i = 1/2$.
-3. Na estatística, a ideia de definir __efeitos causais__ como comparações de __desfechos potenciais__ foi introduzia por __Neyman__ no contexto de experimentos aleatorizados\footnote{Splawa-Neyman, J., Dabrowska, D.M., Speed, T.P. On the Application of Probability Theory to Agricultural Experiments. Essay on Principles. Section 9. \emph{Statistical Science} 5:465-472, 1990.}. Posteriormente, __Rubin__ generalizou esta ideia para o contexto de experimentos não-aleatorizados (estudos observacionais)\footnote{Rubin, D.B. Estimating causal effects of treatments in randomized and nonrandomized
+3. Na estatística, a ideia de definir __efeitos causais__ como comparações de __desfechos potenciais__ foi introduzida por __Neyman__ no contexto de experimentos aleatorizados\footnote{Splawa-Neyman, J., Dabrowska, D.M., Speed, T.P. On the Application of Probability Theory to Agricultural Experiments. Essay on Principles. Section 9. \emph{Statistical Science} 5:465-472, 1990.}. Posteriormente, __Rubin__ generalizou esta ideia para o contexto de experimentos não-aleatorizados (estudos observacionais)\footnote{Rubin, D.B. Estimating causal effects of treatments in randomized and nonrandomized
 studies. \emph{Journal of Educational Psychology} 66:688–701, 1974.}. Alguns autores se referem a esta abordagem como o __modelo causal de Rubin__\footnote{Holland, P. Statistics and Causal Inference. \emph{JASA}, 81:945-960, 1986.}.
 
 ## Estrutura: observações
@@ -265,7 +270,7 @@ $$
 - Assim, __não podemos estimar__ facilmente $\overline{\delta} = \Pr(r_{T_i} = 1) - \Pr(r_{C_i} = 1)$ pelo mesmo motivo que não podemos estimar $\delta_i = r_{T_i} - r_{C_i}$.
 - A inferência causal __é toda sobre a escolha de quantidades dos dados observados__ (isto é, envolvendo $Z$, $R$ e outras variáveis observadas) __que representam substitutos razoáveis__ para quantidades hipotéticas tais como $\overline{\delta}$, que envolvem contrafactuais não observáveis.
 
-## Quando associção é igual a causalidade?
+## Quando associação é igual a causalidade?
 
 - O que pode ser um bom substituto para $\Pr(r_{T_i} = 1)$?
     + $\hat{r}_T = \Pr(R = 1 | Z = 1)$?
@@ -275,11 +280,11 @@ $$
 ### Ignorabilidade
 
 - Somente se aquelas senhoras que tomaram a aspirina forem __intercambiáveis__ com aquelas que não o fizeram.
-- Esta condição (suposição) é conhecida como __ignorabilidade da atribuição ao tratamento__ ($(r_C, r_T) \independent Z | X$, __ausência de confundimento__).
+- Esta condição (suposição) é conhecida como __ignorabilidade da atribuição ao tratamento__ ($(r_C, r_T) \independent Z$, __ausência de confundimento__).
 - Este seria o caso se a escolha de tomar a aspirina fosse feita __ao acaso__.
 - É por isso que __experimentos aleatorizados__ são o __padrão-ouro__ para inferir efeitos causais.
 
-## Quando associção é igual a causalidade?
+## Quando associação é igual a causalidade?
 
 | $i$       | $r_{C_i}$ | $r_{T_i}$ | $Z_i$ | $R_i$ |
 | :-------- | :-------: | :-------: | :---: | :---: |
@@ -292,7 +297,7 @@ $$
 | Annie     |     1     |     \textcolor{red}{?}     |   0   |   1   |
 |      |          |          |      |   $\hat{r}_C = \Pr(R = 1 | Z = 0) = 3/7$   |
 
-## Quando associção é igual a causalidade?
+## Quando associação é igual a causalidade?
 
 | $i$       | $r_{C_i}$ | $r_{T_i}$ | $Z_i$ | $R_i$ |
 | :-------- | :-------: | :-------: | :---: | :---: |
@@ -303,7 +308,7 @@ $$
 | Clara     |     \textcolor{red}{?}     |     1     |   1   |   1   |
 |      |          |          |      |   $\hat{r}_T = \Pr(R = 1 | Z = 1) = 2/5$   |
 
-## Quando associção é igual a causalidade?
+## Quando associação é igual a causalidade?
 
 - Portanto,
 
@@ -319,15 +324,15 @@ $$
 
 ... as senhoras com uma dor de cabeça __mais forte__ (grave) fossem __mais propensas__ a tomarem a aspirina?
 
-- Neste caso, "associação $\neq$ causalidade"! Ou $(r_C, r_T) \notindependent Z | X$.
+- Neste caso, "associação $\neq$ causalidade"! Ou $(r_C, r_T) \notindependent Z$.
 
 ## Levando em conta a gravidade
 
 - Suponha que perguntamos a cada uma das 12 senhoras no início do estudo: __"sua dor de cabeça é forte?"__.
-    + Então, poderíamos propor que, depois de levar em conta a gravidade, a decisão de tomar ou não a aspirina fosse efetivamente tomada de forma aleatória.
+    + Então, poderíamos propor que, depois de levar em conta a gravidade, a decisão de tomar ou não a aspirina __fosse efetivamente tomada de forma aleatória (?!)__.
 - Suponha que $X$ denota a gravidade. Então, sob essa suposição, __dentro dos estratos__ de $X$, os indivíduos expostos e não expostos podem ser __intercambiáveis__.
-- Isso é chamado de __intercambiabilidade (permutabilidade) condicional__ (dado $X$).
-- Sob intercambiabilidade condicional dada $X$, "associação = causalidade" __dentro dos estratos__ de $X$.
+- Isso é chamado de __intercambiabilidade condicional__ ($(r_C, r_T) \independent Z | X\ \mbox{e}\ 0 < \pi_i = \Pr(Z_i = 1|X_i) < 1$).
+- Sob intercambiabilidade condicional, "associação = causalidade" __dentro dos estratos__ de $X$.
 
 ## Levando em conta a gravidade
 
@@ -370,16 +375,16 @@ $$
 ## Exemplo da dor de cabeça: breves conclusões
 
 - De maneira mais geral, se __existe__ um efeito causal de $Z$ em $R$, mas também __uma associação não-causal__ devido a $X$, então o efeito causal será estimado com __viés__, a menos que estratifiquemos em $X$.
-    + Este viés será chamada de __viés de confundimento__ (ou viés de confusão) e $X$ será chamada de __variável confundidora__.
+    + Este viés será chamado de __viés de confundimento__ (ou viés de confusão) e $X$ será chamada de __variável confundidora__.
 
 ## Exemplo da dor de cabeça: breves conclusões
 
-- A __intercambiabilidade condicional__ é o principal critério que nos permite fazer declarações causais usando __dados observacionais__.
-- Assim, precisamos identificar, se possível, um conjunto de (co)variáveis $X_1, X_2, \ldots$ , de tal forma que a intercambiabilidade condicional é válida, dado este conjunto de variáveis.
-- Na vida real, pode haver muitas variáveis candidatas $X$.
-- Estes podem ser __causalmente inter-relacionados__ de uma maneira __muito complexa__.
-- Decidir se os indivíduos expostos e o não expostos são  condicionalmente intercambiáveis, dado $X_1, X_2, \ldots$, __requer conhecimento detalhado do assunto__.
-- Os __diagramas causais__ (DAGs) podem nos ajudar a usar esse conhecimento para determinar se a intercambiabilidade condicional é válida ou não (critério _back-door_, variáveis não observadas).
+>- A __intercambiabilidade condicional__ é o principal critério que nos permite fazer declarações causais usando __dados observacionais__.
+>- Assim, precisamos identificar, se possível, um conjunto de (co)variáveis $X_1, X_2, \ldots$ , de tal forma que a intercambiabilidade condicional é válida, dado este conjunto de variáveis.
+>- Na vida real, pode haver muitas variáveis candidatas $X$.
+>- Estes podem ser __causalmente inter-relacionados__ de uma maneira __muito complexa__.
+>- Decidir se os indivíduos expostos e o não expostos são  condicionalmente intercambiáveis, dado $X_1, X_2, \ldots$, __requer conhecimento detalhado do assunto__.
+>- Os __diagramas causais__ (DAGs) podem nos ajudar a usar esse conhecimento para determinar se a intercambiabilidade condicional é válida ou não (critério _back-door_, variáveis não observadas).
 
 ## DAGs: um exemplo
 
@@ -452,7 +457,7 @@ knitr::include_graphics(here::here('images', 'table_5_6.png'))
 - Considere o caso em que $R$, a variável resposta/desfecho, seja contínua.
 - O modelo de regressão linear supõe:
 $$
-\E[R|Z = z, X_1, \ldots, X_p] = \beta_0 + \beta_Zz + \beta_1x_1 + \ldots + \beta_pX_p.
+\E[R|Z = z, X_1, \ldots, X_p] = \beta_0 + \beta_Zz + \beta_1x_1 + \ldots + \beta_px_p.
 $$
 
 - Assim,
@@ -472,12 +477,12 @@ Se
 
 então pode ser dada uma interpretação causal a $\hat{\beta}_Z$.
 
-- __Intervalos de confiança__ e __testes de hipóteses__ podem ser cosntruídos a partir das propriedades de $\hat{\beta}_Z$.
+- __Intervalos de confiança__ e __testes de hipóteses__ podem ser construídos a partir das propriedades de $\hat{\beta}_Z$.
 
 \framebreak
 
 - Agora, suponha que $R$, a variável resposta/desfecho, seja dicotômica.
-- O modelo de regressão logísitica (uma possibilidade de modelo para uma variável resposta dicotômica) supõe:
+- O modelo de regressão logística (uma possibilidade de modelo para uma variável resposta dicotômica) supõe:
 
 \begin{eqnarray*}
 \E[R|Z=z,X_1,\ldots,X_p] &=& \Pr[R=1|Z=z,X_1,\ldots,X_p]\\
@@ -525,7 +530,7 @@ $$
 - Existem diferentes maneiras de incorporar o escore de propensão na análise para a estimação do efeito causal de interesse:
     1. estratificação (faixas do escore de propensão como estratos)
     2. ajuste na regressão (no lugar dos confundidores, se utiliza apenas o escore de propensão)
-    3. pareamento (esocore de propensão como uma medida de distância entre indivíduos)
+    3. pareamento (escore de propensão como uma medida de distância entre indivíduos)
     4. ponderação (o inverso do escore de propensão como uma ponderação).
 - Estes métodos são válidos somente se os confundidores corretos $X$ são incluídos no conjunto de ajuste e se $p(X)$ é modelado corretamente.
 
@@ -542,6 +547,8 @@ knitr::include_graphics(here::here('images', 'pareamento.png'))
 
 ```
 
+# Comentários finais
+
 ## Comentários finais
 
 - Nesta introdução apresentamos os conceitos básicos da abordagem de desfechos potenciais para inferência causal.
@@ -554,7 +561,32 @@ knitr::include_graphics(here::here('images', 'pareamento.png'))
     + Análise de interação: modificação do efeito.
     + Confundidores intermediários.
     + Confundidores tempo-dependentes.
-    + Desfechos: tempo até evento; séries temporais; dados longituinais.
+    + Desfechos: tempo até evento; séries temporais; dados longitudinais.
+
+## Algumas referências
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE}
+knitr::include_graphics(here('images','books.png'))
+```
+
+- Ainda: https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/
+
+## Atividades atuais
+
+__Departamento de Estatística da UFRGS:__
+
+- __Introdução à Inferência Causal.__ Fundamentos da inferência causal em estudos aleatorizados e não-aleatorizados (https://github.com/rdosreis/MAT02010).
+- __Bruna Silveira.__ Avaliação e aplicação de testes não-paramétricos em DAGs (orientação de TCC).
+- __Luana Krindges.__ Análise de mediação causal com múltiplos mediadores (orientação de TCC).
+
+## Atividades atuais
+
+__Pós-Graduação em Epidemiologia da UFRGS:__
+
+- __Seminários de Doutorado II e III.__ Conceitos e métodos relacionados à inferência causal em epidemiologia mediante abordagens de desfechos potenciais e grafos (em conjunto com o __Prof. Ricardo Kuchenbecker__).
+- __Letícia Menegotto.__ Análise de mediação com dados longitudinais (orientação de mestrado em conjunto com a __Prof.ª Vanessa Leotti__).
+- __Luísa Back.__ Efeito mediador da trajetória de índice de massa corporal na relação peso ao nascer e desenvolvimento de diabetes na vida adulta: ELSA-Brasil (orientação de mestrado em conjunto com o __Prof. Alvaro Vigo__).
+- __Juliana Souza.__ Métodos de estimação em delineamentos duas fases (orientação de mestrado em conjunto com a __Prof.ª Márcia Barbian__).
 
 ## Muito obrigado!
 
