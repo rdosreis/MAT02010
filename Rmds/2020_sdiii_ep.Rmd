@@ -1,0 +1,217 @@
+---
+title: "Métodos de escore de propensão para estimação de efeitos causais em estudos observacionais"
+subtitle: "Uma breve introdução"
+author: |
+  | Ricardo de Souza Kuchenbecker
+  | `rkuchenbecker@hcpa.edu.br`
+  |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Programa de Pós Graduação em Epidemiologia}
+date: |
+  | Porto Alegre, 2020
+---
+
+# Introdução
+
+## Introdução
+
+- Ensaios controlados aleatorizados (RCTs) são considerados são o __padrão-ouro__ para inferir efeitos causais.
+    + Alocação aleatória ao tratamento $\Rightarrow$ ausência de confundimento.
+    + O efeito de tratamento no desfecho pode ser estimado por diretamente comparar desfechos entre indivíduos tratados e não-tratados.
+- Em estudos observacionais, a alocação ao tratamento é geralmente influenciada por características individuais.
+    + Análise ajustada por modelos de regressão para levar em consideração diferenças medidas nas características basais.
+    + Vem crescendo o interesse em métodos baseados no __escore de propensão__ para reduzir ou eliminar os efeitos de confundimento quando dados observacionais são utilizados.
+    
+# RCTs vs Estudos Observacionais
+
+## Desfechos potenciais e efeitos causais
+
+- $Y_i(0)$ e $Y_i(1)$ representam os __desfechos potenciais__.
+    + $Y_i(0)$ é o desfecho que teria sido observado caso o indivíduo $i$ fosse alocado ao grupo controle.
+    + $Y_i(1)$ é o desfecho que teria sido observado caso o indivíduo $i$ fosse alocado ao grupo tratado.
+- $Z_i$ é o tratamento atribuído: $Z_i = 0$, se controle; $Z_i = 1$, se tratado.
+<!-- - Um destes desfechos potenciais é observado: -->
+- $Y_i = Z_i\times Y_i(1) + (1 - Z_i)\times Y_i(0)$.
+    <!-- + O outro é __contrafactual__. -->
+- O par de desfechos potenciais $(Y_i(0), Y_i(1))$ será descrito como o __efeito causal__ (individual).
+    + Chamaremos $Y_i(1) - Y_i(0)$ de o __efeito causal na escala da diferença__ (no texto,  __efeito de tratamento__).
+    + O __efeito médio de tratamento__ $ATE = \E[Y_i(1) - Y_i(0)]$.
+    + $ATT = \E[Y(1) - Y(0)|Z = 1]$.
+
+### Perguntas
+
+- O que represeta o $ATT$?
+- $ATE$ vs $ATT$.
+
+## RCTs
+
+- Em RCTs, $Y(0), Y(1) \independent Z$, e assim
+
+\begin{eqnarray*}
+ATE &=& \E[Y_i(1) - Y_i(0)] \\
+&=& \E[Y_i(1)] - \E[Y_i(0)] \\
+&=& \E[Y_i(1)|Z_i = 1] - \E[Y_i(0)|Z_i = 0] \\
+&=& \E[Y_i|Z_i = 1] - \E[Y_i|Z_i = 0].
+\end{eqnarray*}
+
+- No caso em que o desfecho é dicotômico, temos
+
+$$
+ATE = \Pr(Y_i = 1|Z_i = 1) - \Pr(Y_i = 1|Z_i = 0).
+$$
+
+- É possível avaliar o efeito em outras escalas.
+
+## Estudos observacionais
+
+__Cochran (1965)__\footnote{Cochran, W.G. The planning of observational studies of human populations (with discussion). \emph{Journal of the Royal Statistical Society} Series A, 128:134–155, 1965.}
+
+Uma investigação empírica em que "o objetivo é elucidar __relações de causa e efeito__ ... [em que] não é viável o uso de experimentação controlada, no sentido de ser capaz de impor procedimentos ou tratamentos cujo o efeito é desejável descobrir, ou designar indivíduos aleatoriamente para diferentes procedimentos".
+
+__Pergunta__
+
+>- O que difere entre RCTs e estudos observacionais?
+>- $Y(0), Y(1) \notindependent Z$, e assim $ATE = \E[Y_i(1) - Y_i(0)] \neq \E[Y_i|Z_i = 1] - \E[Y_i|Z_i = 0]$.
+
+# Escore de Propensão e Métodos baseados no EP
+
+## Escore de Propensão {.allowframebreaks}
+
+- Dado um conjunto de covariáveis, quão propenso é o indivíduo de ser (alocado ao grupo) tratado/exposto?
+    + __Escore__ de propensão\footnote{Rosenbaum, P.R., Rubin, D.B. The central role of the propensity score in observational studies for causal effects. \emph{Biometrika} 70:41–55, 1983.}:
+
+$$
+e_i = \Pr(Z_i = 1|X_i).
+$$
+
+- Pode ser estimado através de __regressão logística__, ou por outros modelos de predição e métodos de __aprendizado de máquina__.
+
+\framebreak
+
+::: {.block}
+### Ignorabilidade
+
+- __Ignorabilidade da atribuição ao tratamento:__ 
+    (a) $Y(0), Y(1) \independent Z | X$;
+    (b) $\ 0 < \Pr(Z_i = 1|X_i) < 1$.
+:::
+
+::: {.block}
+### Resultado chave
+
+- O __escore__ de propensão é um escore de balanceamento.
+- Se a atribuição ao tratamento é fortemente ignorável dado $X$, então esta é fortemente ignorável dado qualquer escore de balanceamento. 
+:::
+
+\framebreak
+
+__(Ajuste direto)__
+
+\begin{eqnarray*}
+ATE &=& \E[Y_i(1) - Y_i(0)] \\
+&=& \E[Y_i(1)] - \E[Y_i(0)] \\
+&=& \E[\E[Y_i(1)|X_i]] - \E[\E[Y_i(0)|X_i]] \\
+&=& \E[\E[Y_i(1)|Z_i = 1, X_i]] - \E[\E[Y_i(0)|Z_i = 0, X_i]] \\
+&=& \E[\E[Y_i|Z_i = 1, X_i]] - \E[\E[Y_i|Z_i = 0, X_i]] \\
+&=& \E[\E[Y_i|Z_i = 1, X_i] - \E[Y_i|Z_i = 0, X_i]] \\
+&=& \sum_x{(\E[Y_i|Z_i = 1, X_i = x] - \E[Y_i|Z_i = 0, X_i = x])\Pr(X_i = x)}.
+\end{eqnarray*}
+
+## Pareamento {.allowframebreaks}
+
+- Pareamento com base no escore de propensão envolve a formação de conjuntos de indivíduos tratados e não tratados que compartilham um valor semelhante do escore de propensão.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', out.width='60%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'propensity-score-matching.png'))
+
+```
+
+\framebreak
+
+- __greedy__ vs __optimal__ _matching_.
+- __nearest neighbor matching__ vs __nearest neighbor matching within a specified caliper distance__.
+- - 1:1 vs M:1 _matching_.
+
+## Estratificação
+
+- A estratificação no escore de propensão envolve a estratificação de indivíduos em subconjuntos mutuamente exclusivos, com base no escore de propensão estimado.
+- Uma abordagem comum é dividir os indivíduos em cinco grupos de tamanho igual usando __os quintis__ do escore de propensão.
+- Quando o escore de propensão for especificado corretamente, a distribuição das covariáveis de linha de base medidas __será aproximadamente semelhante__ entre __tratados__ e __não tratados__ no mesmo estrato.
+
+## IPTW
+
+- A __ponderação pelo inverso da probabilidade de tratamento__ (IPTW; $1/e_i$) usando o escore de propensão usa pesos com base no escore de propensão para criar uma __amostra sintética__ na qual a distribuição das covariáveis da linha de base medidas é independente da atribuição do tratamento.
+- As ponderações podem ser definidas como $w_i = \frac{Z_i}{e_i} + \frac{(1 - Z_i)}{1 - e_i}$.
+- $ATE = \E[w_iY_i|Z_i = 1] - \E[w_iY_i|Z_i = 0]$.
+
+## Ajuste de covariável usando Escore de Propensão
+
+- De
+$$
+\E[Y|Z = z, X_1, \ldots, X_p] = \beta_0 + \beta_Zz + \beta_1x_1 + \ldots + \beta_px_p.
+$$
+
+- Para
+$$
+\E[Y|Z = z, e(X)] = \beta_0 + \beta_Zz + \beta_1e(X).
+$$
+
+## Comparação dos métodos
+
+- Estudos de Monte Carlo compararam o desempenho relativo dos diferentes métodos de escore de propensão para estimar diferenças de risco, riscos relativos e razões de chances marginais e condicionais.
+- Dois desses estudos apresentaram que a estratificação, o pareamento e o ajuste covariável usando o escore de propensão resultaram em estimativas enviesadas.
+
+# Diagnóstico do balanceamento
+
+## Diagnóstico do balanceamento
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', out.width='60%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'balance-diag-3.png'))
+
+```
+
+## Diagnóstico do balanceamento
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', out.width='60%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'balance-diag.png'))
+
+```
+
+## Diagnóstico do balanceamento
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', out.width='60%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'balance-diag-2.png'))
+
+```
+
+# Comentários finais
+
+## Comentários finais
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.width='90%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'escore-prop.png'))
+
+```
+
+## Comentários finais
+
+- Seleção da variável para o modelo do Escore de Propensão
+
+- Métodos baseados no Escore de Propensão vs ajuste de regressão
+
+## Por hoje é só!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.width='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here('images', 'caffeine-causality-loop.jpg'))
+
+```
+

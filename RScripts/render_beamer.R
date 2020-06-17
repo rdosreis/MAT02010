@@ -3,7 +3,7 @@ library(rmarkdown)
 
 pasta <- "Rmds"
 # arquivo <- "02_estrutura"
-arquivo <- "2020_cafe_do_dest_ufpr"
+arquivo <- "2020_sdiii_ep"
 
 arquivo_rmd <- paste0(arquivo, ".Rmd")
 arquivo_pdf <- paste0(arquivo, ".pdf")
